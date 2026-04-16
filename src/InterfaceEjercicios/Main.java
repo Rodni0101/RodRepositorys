@@ -1,4 +1,4 @@
-package Repositorio1.InterfaceEjercicios;
+package InterfaceEjercicios;
 import java.util.*;
 public class Main {
     public static void main(String[] args) {

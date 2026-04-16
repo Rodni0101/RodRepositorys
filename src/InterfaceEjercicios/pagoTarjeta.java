@@ -1,4 +1,4 @@
-package Repositorio1.InterfaceEjercicios;
+package InterfaceEjercicios;
 
 class pagoTarjeta implements Pago{
     @Override

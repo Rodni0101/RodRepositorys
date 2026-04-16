@@ -1,4 +1,4 @@
-package Repositorio1.InterfaceEjercicios;
+package InterfaceEjercicios;
 
 public class pagoTransferencia implements Pago{
     @Override
