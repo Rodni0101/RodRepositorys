@@ -6,12 +6,12 @@ public class Main {
         System.out.println("Sistema de pago");
         System.out.print("Ingrese el valor a pagar: ");
         double Pago = leer.nextDouble();
-
+        //Recordatorio : Cerrar los Scanner
+        leer.close();
         System.out.println("1. Pago por tarjeta");
         System.out.println("2. Pago en efectivo");
         System.out.println("3. Pago por trasnferencia");
         int opcion = leer.nextInt();
-        leer.close();
         System.out.println();
 
         switch(opcion){

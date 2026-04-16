@@ -32,10 +32,12 @@ public class Main {
         System.out.print("Ingresa el monto a pagar: ");
         double monto = leer.nextDouble();
 
+        leer.close();
         MetodoPago pago = new Efectivo(titular);
         pago.pagar(monto);
             }
         }
+        
     }
 }
 
