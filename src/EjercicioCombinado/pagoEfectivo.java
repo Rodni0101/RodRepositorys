@@ -1,4 +1,4 @@
-package InterfaceEjercicios;
+package EjercicioCombinado;
 
 public class pagoEfectivo implements Pago{
     @Override

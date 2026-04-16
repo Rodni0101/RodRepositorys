@@ -1,4 +1,4 @@
-package InterfaceEjercicios;
+package EjercicioCombinado;
 
 public interface Pago {
     public void Pagar();

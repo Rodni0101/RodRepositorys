@@ -1,4 +1,4 @@
-package Ejercicio;
+package EjercicioImplements;
 
 public class Tarjeta extends Pago implements MetodoPago{
     

@@ -1,4 +1,4 @@
-package Ejercicio;
+package EjercicioImplements;
 
 public class Efectivo extends Pago implements MetodoPago{
     

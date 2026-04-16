@@ -1,4 +1,4 @@
-package InterfaceEjercicios;
+package EjercicioCombinado;
 
 class pagoTarjeta implements Pago{
     @Override
