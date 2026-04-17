@@ -1,0 +1,31 @@
+table {
+    border-collapse: collapse;
+    width: 300px;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: #333;
+    color: white;
+}
+
+contenedor {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+img {
+    width: 150px;
+    height: auto;
+}
+
+body{
+    background-image: url(./fotos/texture-7515225_1280.jpg);
+    background-size: cover;
+}
