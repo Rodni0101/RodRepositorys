@@ -1,17 +1,26 @@
-let nombre = prompt("Ingresa tu nombre: ");
+const nombre = prompt("Ingresa tu nombre:");
 
-if (nombre == "Rodney") {
-  document.getElementById("mensaje").textContent = "Bienvenido " + nombre;
+if (nombre === "Rodney") {
 
-  let numero = Number(prompt("Ingresa un numero: "));
-  let resultado = "";
+    document.getElementById("mensaje").textContent = `Bienvenido ${nombre}`;
 
-  for (let v = 1; v <= 10; v++) {
-    resultado += "<tr><td>" + numero + " x " + v + "</td><td>" + (numero * v) + "</td></tr>";
-  }
+    const numero = Number(prompt("Ingresa un número:"));
+    const tbody = document.getElementById("resultado");
 
-  document.getElementById("resultado").innerHTML = resultado;
+    for (let i = 1; i <= 10; i++) {
+        const fila = document.createElement("tr");
+
+        const operacion = document.createElement("td");
+        operacion.textContent = `${numero} x ${i}`;
+
+        const resultado = document.createElement("td");
+        resultado.textContent = numero * i;
+
+        fila.appendChild(operacion);
+        fila.appendChild(resultado);
+        tbody.appendChild(fila);
+    }
 
 } else {
-  alert("Largo " + nombre);
+    alert(`Largo ${nombre}`);
 }
