@@ -7,7 +7,7 @@ if (nombre == "Rodney") {
   let resultado = "";
 
   for (let v = 1; v <= 10; v++) {
-    resultado += numero + " x " + v + " = " + (numero * v) + "<br>";
+    resultado += "<tr><td>" + numero + " x " + v + "</td><td>" + (numero * v) + "</td></tr>";
   }
 
   document.getElementById("resultado").innerHTML = resultado;
