@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="SistemaGestionTramites">
+  <ClassDiagramComponents>
+    <Class name="Tramite" package="sistemagestiontramites" visibility="public" xPosition="564.0" yPosition="9.0">
+      <Fields>
+        <Field name="Ciudadano" type="String" visibility="private"/>
+        <Field name="costoBase" type="double" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="Ciudadano"/>
+          <Argument type="double" name="costoBase"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getCiudadano" returnType="String" visibility="public"/>
+        <Method name="setCiudadano" returnType="void" visibility="public">
+          <Argument type="String" name="Ciudadano"/>
+        </Method>
+        <Method name="getCostoBase" returnType="double" visibility="public"/>
+        <Method name="setCostoBase" returnType="void" visibility="public">
+          <Argument type="double" name="costoBase"/>
+        </Method>
+        <Method name="calcularCostoFinal" returnType="double" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="RegistroCivil" package="sistemagestiontramites" visibility="public" xPosition="37.0" yPosition="471.0">
+      <Fields>
+        <Field name="tarifaFija" type="double" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="double" name="tarifaFija"/>
+          <Argument type="String" name="Ciudadano"/>
+          <Argument type="double" name="costoBase"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getTarifaFija" returnType="double" visibility="public"/>
+        <Method name="setTarifaFija" returnType="void" visibility="public">
+          <Argument type="double" name="tarifaFija"/>
+        </Method>
+        <Method name="calcularCostoFinal" returnType="double" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="TarjetaIdentidad" package="sistemagestiontramites" visibility="public" xPosition="487.0" yPosition="471.0">
+      <Fields>
+        <Field name="Descuento" type="double" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="double" name="Descuento"/>
+          <Argument type="String" name="Ciudadano"/>
+          <Argument type="double" name="costoBase"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getDescuento" returnType="double" visibility="public"/>
+        <Method name="setDescuento" returnType="void" visibility="public">
+          <Argument type="double" name="Descuento"/>
+        </Method>
+        <Method name="calcularCostoFinal" returnType="double" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="cedulaCiudadania" package="sistemagestiontramites" visibility="public" xPosition="948.0" yPosition="471.0">
+      <Fields>
+        <Field name="recargoUrgente" type="double" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="double" name="recargoUrgente"/>
+          <Argument type="String" name="Ciudadano"/>
+          <Argument type="double" name="costoBase"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getRecargoUrgente" returnType="double" visibility="public"/>
+        <Method name="setRecargoUrgente" returnType="void" visibility="public">
+          <Argument type="double" name="recargoUrgente"/>
+        </Method>
+        <Method name="calcularCostoFinal" returnType="double" visibility="public"/>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <IsRelation name="is" source="sistemagestiontramites.RegistroCivil" target="sistemagestiontramites.Tramite"/>
+    <IsRelation name="is" source="sistemagestiontramites.TarjetaIdentidad" target="sistemagestiontramites.Tramite"/>
+    <IsRelation name="is" source="sistemagestiontramites.cedulaCiudadania" target="sistemagestiontramites.Tramite"/>
+  </ClassDiagramRelations>
+</ClassDiagram>

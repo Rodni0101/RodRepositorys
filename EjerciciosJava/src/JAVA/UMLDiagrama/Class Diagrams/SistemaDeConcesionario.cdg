@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="semanasanta.TallerEjercicio1">
+  <ClassDiagramComponents>
+    <Class name="Automovil" package="semanasanta.TallerEjercicio1" visibility="public" xPosition="26.0" yPosition="536.0">
+      <Fields>
+        <Field name="Impuesto" type="double" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="double" name="Impuesto"/>
+          <Argument type="String" name="Marca"/>
+          <Argument type="double" name="PrecioBase"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getImpuesto" returnType="double" visibility="public"/>
+        <Method name="setImpuesto" returnType="void" visibility="public">
+          <Argument type="double" name="Impuesto"/>
+        </Method>
+        <Method name="calcularPrecioFinal" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Camion" package="semanasanta.TallerEjercicio1" visibility="public" xPosition="470.0" yPosition="536.0">
+      <Fields>
+        <Field name="CostoCarga" type="double" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="double" name="CostoCarga"/>
+          <Argument type="String" name="Marca"/>
+          <Argument type="double" name="PrecioBase"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getCostoCarga" returnType="double" visibility="public"/>
+        <Method name="setCostoCarga" returnType="void" visibility="public">
+          <Argument type="double" name="CostoCarga"/>
+        </Method>
+        <Method name="calcularPrecioFinal" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Motocicleta" package="semanasanta.TallerEjercicio1" visibility="public" xPosition="909.0" yPosition="536.0">
+      <Fields>
+        <Field name="Descuento" type="double" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="double" name="Descuento"/>
+          <Argument type="String" name="Marca"/>
+          <Argument type="double" name="PrecioBase"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getDescuento" returnType="double" visibility="public"/>
+        <Method name="setDescuento" returnType="void" visibility="public">
+          <Argument type="double" name="Descuento"/>
+        </Method>
+        <Method name="calcularPrecioFinal" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Vehiculo" package="semanasanta.TallerEjercicio1" visibility="public" xPosition="510.0" yPosition="34.0">
+      <Fields>
+        <Field name="Marca" type="String" visibility="private"/>
+        <Field name="PrecioBase" type="double" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="Marca"/>
+          <Argument type="double" name="PrecioBase"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getMarca" returnType="String" visibility="public"/>
+        <Method name="setMarca" returnType="void" visibility="public">
+          <Argument type="String" name="Marca"/>
+        </Method>
+        <Method name="getPrecioBase" returnType="double" visibility="public"/>
+        <Method name="setPrecioBase" returnType="void" visibility="public">
+          <Argument type="double" name="PrecioBase"/>
+        </Method>
+        <Method name="calcularPrecioFinal" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <IsRelation name="is" source="semanasanta.TallerEjercicio1.Motocicleta" target="semanasanta.TallerEjercicio1.Vehiculo"/>
+    <IsRelation name="is" source="semanasanta.TallerEjercicio1.Automovil" target="semanasanta.TallerEjercicio1.Vehiculo"/>
+    <IsRelation name="is" source="semanasanta.TallerEjercicio1.Camion" target="semanasanta.TallerEjercicio1.Vehiculo"/>
+  </ClassDiagramRelations>
+</ClassDiagram>

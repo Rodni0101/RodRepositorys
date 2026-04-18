@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="SistemaTiendaRopa">
+  <ClassDiagramComponents>
+    <Class name="Producto" package="sistematiendaropa" visibility="public" xPosition="604.0" yPosition="41.0">
+      <Fields>
+        <Field name="Nombre" type="String" visibility="private"/>
+        <Field name="PrecioBase" type="double" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="Nombre"/>
+          <Argument type="double" name="PrecioBase"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="setNombre" returnType="void" visibility="public">
+          <Argument type="String" name="Nombre"/>
+        </Method>
+        <Method name="getNombre" returnType="String" visibility="public"/>
+        <Method name="setPrecioBase" returnType="void" visibility="public">
+          <Argument type="double" name="PrecioBase"/>
+        </Method>
+        <Method name="getPrecioBase" returnType="double" visibility="public"/>
+        <Method name="CalcularPrecioFinal" returnType="double" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Camisa" package="sistematiendaropa" visibility="public" xPosition="45.0" yPosition="537.0">
+      <Fields>
+        <Field name="Descuento" type="double" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="double" name="Descuento"/>
+          <Argument type="String" name="Nombre"/>
+          <Argument type="double" name="PrecioBase"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getDescuento" returnType="double" visibility="public"/>
+        <Method name="setDescuento" returnType="void" visibility="public">
+          <Argument type="double" name="Descuento"/>
+        </Method>
+        <Method name="CalcularPrecioFinal" returnType="double" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Pantalon" package="sistematiendaropa" visibility="public" xPosition="555.0" yPosition="537.0">
+      <Fields>
+        <Field name="Impuesto" type="double" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="double" name="Impuesto"/>
+          <Argument type="String" name="Nombre"/>
+          <Argument type="double" name="PrecioBase"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getImpuesto" returnType="double" visibility="public"/>
+        <Method name="setImpuesto" returnType="void" visibility="public">
+          <Argument type="double" name="Impuesto"/>
+        </Method>
+        <Method name="CalcularPrecioFinal" returnType="double" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Chaqueta" package="sistematiendaropa" visibility="public" xPosition="1085.0" yPosition="537.0">
+      <Fields>
+        <Field name="costoEnvio" type="int" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="int" name="costoEnvio"/>
+          <Argument type="String" name="Nombre"/>
+          <Argument type="double" name="PrecioBase"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getCostoEnvio" returnType="int" visibility="public"/>
+        <Method name="setCostoEnvio" returnType="void" visibility="public">
+          <Argument type="int" name="costoEnvio"/>
+        </Method>
+        <Method name="CalcularPrecioFinal" returnType="double" visibility="public"/>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <IsRelation name="is" source="sistematiendaropa.Chaqueta" target="sistematiendaropa.Producto"/>
+    <IsRelation name="is" source="sistematiendaropa.Camisa" target="sistematiendaropa.Producto"/>
+    <IsRelation name="is" source="sistematiendaropa.Pantalon" target="sistematiendaropa.Producto"/>
+  </ClassDiagramRelations>
+</ClassDiagram>

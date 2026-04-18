@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="SistemaDeUrgencias">
+  <ClassDiagramComponents>
+    <Class name="Paciente" package="semanasanta.TallerEjercicio2" visibility="public" xPosition="632.0" yPosition="38.0">
+      <Fields>
+        <Field name="Nombre" type="String" visibility="private"/>
+        <Field name="CostoConsulta" type="double" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="Nombre"/>
+          <Argument type="double" name="CostoConsulta"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getNombre" returnType="String" visibility="public"/>
+        <Method name="setNombre" returnType="void" visibility="public">
+          <Argument type="String" name="Nombre"/>
+        </Method>
+        <Method name="getCostoConsulta" returnType="double" visibility="public"/>
+        <Method name="setCostoConsulta" returnType="void" visibility="public">
+          <Argument type="double" name="CostoConsulta"/>
+        </Method>
+        <Method name="calcularCostoFinal" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="PacienteAsegurado" package="semanasanta.TallerEjercicio2" visibility="public" xPosition="25.0" yPosition="532.0">
+      <Fields>
+        <Field name="porcentajeCobertura" type="double" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="double" name="porcentajeCobertura"/>
+          <Argument type="String" name="Nombre"/>
+          <Argument type="double" name="CostoConsulta"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getPorcentajeCobertura" returnType="double" visibility="public"/>
+        <Method name="setPorcentajeCobertura" returnType="void" visibility="public">
+          <Argument type="double" name="porcentajeCobertura"/>
+        </Method>
+        <Method name="calcularCostoFinal" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="PacienteGeneral" package="semanasanta.TallerEjercicio2" visibility="public" xPosition="580.0" yPosition="532.0">
+      <Fields>
+        <Field name="copago" type="double" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="double" name="copago"/>
+          <Argument type="String" name="Nombre"/>
+          <Argument type="double" name="CostoConsulta"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getCopago" returnType="double" visibility="public"/>
+        <Method name="setCopago" returnType="void" visibility="public">
+          <Argument type="double" name="copago"/>
+        </Method>
+        <Method name="calcularCostoFinal" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="PacienteUrgencias" package="semanasanta.TallerEjercicio2" visibility="public" xPosition="1071.0" yPosition="532.0">
+      <Fields>
+        <Field name="recargoUrgencia" type="double" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="double" name="recargoUrgencia"/>
+          <Argument type="String" name="Nombre"/>
+          <Argument type="double" name="CostoConsulta"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getRecargoUrgencia" returnType="double" visibility="public"/>
+        <Method name="setRecargoUrgencia" returnType="void" visibility="public">
+          <Argument type="double" name="recargoUrgencia"/>
+        </Method>
+        <Method name="calcularCostoFinal" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <IsRelation name="is" source="semanasanta.TallerEjercicio2.PacienteUrgencias" target="semanasanta.TallerEjercicio2.Paciente"/>
+    <IsRelation name="is" source="semanasanta.TallerEjercicio2.PacienteAsegurado" target="semanasanta.TallerEjercicio2.Paciente"/>
+    <IsRelation name="is" source="semanasanta.TallerEjercicio2.PacienteGeneral" target="semanasanta.TallerEjercicio2.Paciente"/>
+  </ClassDiagramRelations>
+</ClassDiagram>

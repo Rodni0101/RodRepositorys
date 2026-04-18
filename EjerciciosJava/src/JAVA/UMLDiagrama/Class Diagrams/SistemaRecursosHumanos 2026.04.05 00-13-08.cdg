@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="SistemaRecursosHumanos">
+  <ClassDiagramComponents>
+    <Class name="Empleado" package="sistemarecursoshumanos" visibility="public" xPosition="537.0" yPosition="14.0">
+      <Fields>
+        <Field name="Nombre" type="String" visibility="private"/>
+        <Field name="Edad" type="int" visibility="private"/>
+        <Field name="salarioBase" type="double" visibility="private"/>
+        <Field name="Cargo" type="String" visibility="private"/>
+        <Field name="Departamento" type="String" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="Nombre"/>
+          <Argument type="int" name="Edad"/>
+          <Argument type="double" name="salarioBase"/>
+          <Argument type="String" name="Cargo"/>
+          <Argument type="String" name="Departamento"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getNombre" returnType="String" visibility="public"/>
+        <Method name="setNombre" returnType="void" visibility="public">
+          <Argument type="String" name="Nombre"/>
+        </Method>
+        <Method name="getEdad" returnType="int" visibility="public"/>
+        <Method name="setEdad" returnType="void" visibility="public">
+          <Argument type="int" name="Edad"/>
+        </Method>
+        <Method name="getSalarioBase" returnType="double" visibility="public"/>
+        <Method name="setSalarioBase" returnType="void" visibility="public">
+          <Argument type="double" name="salarioBase"/>
+        </Method>
+        <Method name="getCargo" returnType="String" visibility="public"/>
+        <Method name="setCargo" returnType="void" visibility="public">
+          <Argument type="String" name="Cargo"/>
+        </Method>
+        <Method name="getDepartamento" returnType="String" visibility="public"/>
+        <Method name="setDepartamento" returnType="void" visibility="public">
+          <Argument type="String" name="Departamento"/>
+        </Method>
+        <Method name="mostrarInfo" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="EmpleadoTiempoCompleto" package="sistemarecursoshumanos" visibility="public" xPosition="-357.0" yPosition="811.0">
+      <Fields>
+        <Field name="bonoAnual" type="double" visibility="private"/>
+        <Field name="horasSemanales" type="int" visibility="private"/>
+        <Field name="tipoContrato" type="String" visibility="private"/>
+        <Field name="añosEnEmpresa" type="int" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="double" name="bonoAnual"/>
+          <Argument type="int" name="horasSemanales"/>
+          <Argument type="String" name="tipoContrato"/>
+          <Argument type="int" name="añosEnEmpresa"/>
+          <Argument type="String" name="Nombre"/>
+          <Argument type="int" name="Edad"/>
+          <Argument type="double" name="salarioBase"/>
+          <Argument type="String" name="Cargo"/>
+          <Argument type="String" name="Departamento"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getBonoAnual" returnType="double" visibility="public"/>
+        <Method name="setBonoAnual" returnType="void" visibility="public">
+          <Argument type="double" name="bonoAnual"/>
+        </Method>
+        <Method name="getHorasSemanales" returnType="int" visibility="public"/>
+        <Method name="setHorasSemanales" returnType="void" visibility="public">
+          <Argument type="int" name="horasSemanales"/>
+        </Method>
+        <Method name="getTipoContrato" returnType="String" visibility="public"/>
+        <Method name="setTipoContrato" returnType="void" visibility="public">
+          <Argument type="String" name="tipoContrato"/>
+        </Method>
+        <Method name="getAñosEnEmpresa" returnType="int" visibility="public"/>
+        <Method name="setAñosEnEmpresa" returnType="void" visibility="public">
+          <Argument type="int" name="añosEnEmpresa"/>
+        </Method>
+        <Method name="mostrarInfo" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="EmpleadoPasante" package="sistemarecursoshumanos" visibility="public" xPosition="-343.0" yPosition="487.0">
+      <Fields>
+        <Field name="Universidad" type="String" visibility="private"/>
+        <Field name="Carrera" type="String" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="Universidad"/>
+          <Argument type="String" name="Carrera"/>
+          <Argument type="String" name="Nombre"/>
+          <Argument type="int" name="Edad"/>
+          <Argument type="double" name="salarioBase"/>
+          <Argument type="String" name="Cargo"/>
+          <Argument type="String" name="Departamento"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getUniversidad" returnType="String" visibility="public"/>
+        <Method name="setUniversidad" returnType="void" visibility="public">
+          <Argument type="String" name="Universidad"/>
+        </Method>
+        <Method name="getCarrera" returnType="String" visibility="public"/>
+        <Method name="setCarrera" returnType="void" visibility="public">
+          <Argument type="String" name="Carrera"/>
+        </Method>
+        <Method name="mostrarInfo" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="EmpleadoPorHoras" package="sistemarecursoshumanos" visibility="public" xPosition="1063.0" yPosition="468.0">
+      <Fields>
+        <Field name="horasTrabajadas" type="int" visibility="private"/>
+        <Field name="pagoPorHoras" type="double" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="int" name="horasTrabajadas"/>
+          <Argument type="double" name="pagoPorHoras"/>
+          <Argument type="String" name="nombre"/>
+          <Argument type="int" name="edad"/>
+          <Argument type="double" name="salarioBase"/>
+          <Argument type="String" name="cargo"/>
+          <Argument type="String" name="departamento"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getHorasTrabajadas" returnType="int" visibility="public"/>
+        <Method name="setHorasTrabajadas" returnType="void" visibility="public">
+          <Argument type="int" name="horasTrabajadas"/>
+        </Method>
+        <Method name="getPagoPorHoras" returnType="double" visibility="public"/>
+        <Method name="setPagoPorHoras" returnType="void" visibility="public">
+          <Argument type="double" name="pagoPorHoras"/>
+        </Method>
+        <Method name="calcularTotal" returnType="double" visibility="public"/>
+        <Method name="mostrarInfo" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <IsRelation name="is" source="sistemarecursoshumanos.EmpleadoTiempoCompleto" target="sistemarecursoshumanos.Empleado"/>
+    <IsRelation name="is" source="sistemarecursoshumanos.EmpleadoPorHoras" target="sistemarecursoshumanos.Empleado"/>
+    <IsRelation name="is" source="sistemarecursoshumanos.EmpleadoPasante" target="sistemarecursoshumanos.Empleado"/>
+  </ClassDiagramRelations>
+</ClassDiagram>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="SistemaDeServicioDeSalud">
+  <ClassDiagramComponents>
+    <Class name="Paciente" package="sistemadeserviciodesalud" visibility="public" xPosition="529.0" yPosition="8.0">
+      <Fields>
+        <Field name="Nombre" type="String" visibility="private"/>
+        <Field name="Edad" type="int" visibility="private"/>
+        <Field name="Documento" type="String" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="Nombre"/>
+          <Argument type="int" name="Edad"/>
+          <Argument type="String" name="Documento"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getNombre" returnType="String" visibility="public"/>
+        <Method name="setNombre" returnType="void" visibility="public">
+          <Argument type="String" name="Nombre"/>
+        </Method>
+        <Method name="getEdad" returnType="int" visibility="public"/>
+        <Method name="setEdad" returnType="void" visibility="public">
+          <Argument type="int" name="Edad"/>
+        </Method>
+        <Method name="getDocumento" returnType="String" visibility="public"/>
+        <Method name="setDocumento" returnType="void" visibility="public">
+          <Argument type="String" name="Documento"/>
+        </Method>
+        <Method name="mostrarInfo" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="PacienteGeneral" package="sistemadeserviciodesalud" visibility="public" xPosition="-108.0" yPosition="509.0">
+      <Fields>
+        <Field name="motivoConsulta" type="String" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="motivoConsulta"/>
+          <Argument type="String" name="Nombre"/>
+          <Argument type="int" name="Edad"/>
+          <Argument type="String" name="Documento"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getMotivoConsulta" returnType="String" visibility="public"/>
+        <Method name="setMotivoConsulta" returnType="void" visibility="public">
+          <Argument type="String" name="motivoConsulta"/>
+        </Method>
+        <Method name="mostrarInfo" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="PacienteConCita" package="sistemadeserviciodesalud" visibility="public" xPosition="439.0" yPosition="480.0">
+      <Fields>
+        <Field name="fechacita" type="String" visibility="private"/>
+        <Field name="horaCita" type="String" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="fechacita"/>
+          <Argument type="String" name="horaCita"/>
+          <Argument type="String" name="Nombre"/>
+          <Argument type="int" name="Edad"/>
+          <Argument type="String" name="Documento"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getFechacita" returnType="String" visibility="public"/>
+        <Method name="setFechacita" returnType="void" visibility="public">
+          <Argument type="String" name="fechacita"/>
+        </Method>
+        <Method name="getHoraCita" returnType="String" visibility="public"/>
+        <Method name="setHoraCita" returnType="void" visibility="public">
+          <Argument type="String" name="horaCita"/>
+        </Method>
+        <Method name="mostrarInfo" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="PacienteUrgencia" package="sistemadeserviciodesalud" visibility="public" xPosition="1116.0" yPosition="509.0">
+      <Fields>
+        <Field name="nivelUrgencia" type="int" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="int" name="nivelUrgencia"/>
+          <Argument type="String" name="Nombre"/>
+          <Argument type="int" name="Edad"/>
+          <Argument type="String" name="Documento"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getNivelUrgencia" returnType="int" visibility="public"/>
+        <Method name="setNivelUrgencia" returnType="void" visibility="public">
+          <Argument type="int" name="nivelUrgencia"/>
+        </Method>
+        <Method name="mostrarInfo" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <IsRelation name="is" source="sistemadeserviciodesalud.PacienteUrgencia" target="sistemadeserviciodesalud.Paciente"/>
+    <IsRelation name="is" source="sistemadeserviciodesalud.PacienteGeneral" target="sistemadeserviciodesalud.Paciente"/>
+    <IsRelation name="is" source="sistemadeserviciodesalud.PacienteConCita" target="sistemadeserviciodesalud.Paciente"/>
+  </ClassDiagramRelations>
+</ClassDiagram>

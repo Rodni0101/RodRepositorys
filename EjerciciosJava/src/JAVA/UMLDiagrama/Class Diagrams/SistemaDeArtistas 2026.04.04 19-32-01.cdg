@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="SistemaDeArtistas">
+  <ClassDiagramComponents>
+    <Class name="Artista" package="sistemadeartistas" visibility="public" xPosition="530.0" yPosition="-96.0">
+      <Fields>
+        <Field name="Nombre" type="String" visibility="private"/>
+        <Field name="Edad" type="int" visibility="private"/>
+        <Field name="Estilo" type="String" visibility="private"/>
+        <Field name="numObras" type="int" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="Nombre"/>
+          <Argument type="int" name="Edad"/>
+          <Argument type="String" name="Estilo"/>
+          <Argument type="int" name="numObras"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getNombre" returnType="String" visibility="public"/>
+        <Method name="setNombre" returnType="void" visibility="public">
+          <Argument type="String" name="Nombre"/>
+        </Method>
+        <Method name="getEdad" returnType="int" visibility="public"/>
+        <Method name="setEdad" returnType="void" visibility="public">
+          <Argument type="int" name="Edad"/>
+        </Method>
+        <Method name="getEstilo" returnType="String" visibility="public"/>
+        <Method name="setEstilo" returnType="void" visibility="public">
+          <Argument type="String" name="Estilo"/>
+        </Method>
+        <Method name="getNumObras" returnType="int" visibility="public"/>
+        <Method name="setNumObras" returnType="void" visibility="public">
+          <Argument type="int" name="numObras"/>
+        </Method>
+        <Method name="mostrarInfo" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="ArtistaDigital" package="sistemadeartistas" visibility="public" xPosition="-84.0" yPosition="461.0">
+      <Fields>
+        <Field name="Herramientas" type="String" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="Herramientas"/>
+          <Argument type="String" name="Nombre"/>
+          <Argument type="int" name="Edad"/>
+          <Argument type="String" name="Estilo"/>
+          <Argument type="int" name="numObras"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getHerramientas" returnType="String" visibility="public"/>
+        <Method name="setHerramientas" returnType="void" visibility="public">
+          <Argument type="String" name="Herramientas"/>
+        </Method>
+        <Method name="mostrarInfo" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="MusicoDigital" package="sistemadeartistas" visibility="public" xPosition="449.0" yPosition="461.0">
+      <Fields>
+        <Field name="generoMusical" type="String" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="generoMusical"/>
+          <Argument type="String" name="Nombre"/>
+          <Argument type="int" name="Edad"/>
+          <Argument type="String" name="Estilo"/>
+          <Argument type="int" name="numObras"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getGeneroMusical" returnType="String" visibility="public"/>
+        <Method name="setGeneroMusical" returnType="void" visibility="public">
+          <Argument type="String" name="generoMusical"/>
+        </Method>
+        <Method name="mostrarInfo" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="CreadorDeContenido" package="sistemadeartistas" visibility="public" xPosition="1020.0" yPosition="461.0">
+      <Fields>
+        <Field name="Plataforma" type="String" visibility="private"/>
+        <Field name="numSeguidores" type="double" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="Plataforma"/>
+          <Argument type="double" name="numSeguidores"/>
+          <Argument type="String" name="Nombre"/>
+          <Argument type="int" name="Edad"/>
+          <Argument type="String" name="Estilo"/>
+          <Argument type="int" name="numObras"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getPlataforma" returnType="String" visibility="public"/>
+        <Method name="setPlataforma" returnType="void" visibility="public">
+          <Argument type="String" name="Plataforma"/>
+        </Method>
+        <Method name="getNumSeguidores" returnType="double" visibility="public"/>
+        <Method name="setNumSeguidores" returnType="void" visibility="public">
+          <Argument type="double" name="numSeguidores"/>
+        </Method>
+        <Method name="mostrarInfo" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <IsRelation name="is" source="sistemadeartistas.CreadorDeContenido" target="sistemadeartistas.Artista"/>
+    <IsRelation name="is" source="sistemadeartistas.ArtistaDigital" target="sistemadeartistas.Artista"/>
+    <IsRelation name="is" source="sistemadeartistas.MusicoDigital" target="sistemadeartistas.Artista"/>
+  </ClassDiagramRelations>
+</ClassDiagram>

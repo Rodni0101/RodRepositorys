@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="SistemaDeCriaturas">
+  <ClassDiagramComponents>
+    <Class name="Criatura" package="sistemadecriaturas" visibility="public" xPosition="541.0" yPosition="12.0">
+      <Fields>
+        <Field name="Nombre" type="String" visibility="private"/>
+        <Field name="nivelEnergia" type="int" visibility="private"/>
+        <Field name="tipoADN" type="String" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="Nombre"/>
+          <Argument type="int" name="nivelEnergia"/>
+          <Argument type="String" name="tipoADN"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getNombre" returnType="String" visibility="public"/>
+        <Method name="setNombre" returnType="void" visibility="public">
+          <Argument type="String" name="Nombre"/>
+        </Method>
+        <Method name="getNivelEnergia" returnType="int" visibility="public"/>
+        <Method name="setNivelEnergia" returnType="void" visibility="public">
+          <Argument type="int" name="nivelEnergia"/>
+        </Method>
+        <Method name="getTipoADN" returnType="String" visibility="public"/>
+        <Method name="setTipoADN" returnType="void" visibility="public">
+          <Argument type="String" name="tipoADN"/>
+        </Method>
+        <Method name="imprimirInfo" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="CriaturaVoladora" package="sistemadecriaturas" visibility="public" xPosition="-30.0" yPosition="450.0">
+      <Fields>
+        <Field name="tamañoAlas" type="double" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="double" name="tamañoAlas"/>
+          <Argument type="String" name="Nombre"/>
+          <Argument type="int" name="nivelEnergia"/>
+          <Argument type="String" name="tipoADN"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getTamañoAlas" returnType="double" visibility="public"/>
+        <Method name="setTamañoAlas" returnType="void" visibility="public">
+          <Argument type="double" name="tamañoAlas"/>
+        </Method>
+        <Method name="imprimirInfo" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="CriaturaAcuatica" package="sistemadecriaturas" visibility="public" xPosition="474.0" yPosition="460.0">
+      <Fields>
+        <Field name="profundidadMaxima" type="double" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="double" name="profundidadMaxima"/>
+          <Argument type="String" name="Nombre"/>
+          <Argument type="int" name="nivelEnergia"/>
+          <Argument type="String" name="tipoADN"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getProfundidadMaxima" returnType="double" visibility="public"/>
+        <Method name="setProfundidadMaxima" returnType="void" visibility="public">
+          <Argument type="double" name="profundidadMaxima"/>
+        </Method>
+        <Method name="imprimirInfo" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="CriaturaTerrestre" package="sistemadecriaturas" visibility="public" xPosition="1072.0" yPosition="450.0">
+      <Fields>
+        <Field name="Fuerza" type="int" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="int" name="Fuerza"/>
+          <Argument type="String" name="Nombre"/>
+          <Argument type="int" name="nivelEnergia"/>
+          <Argument type="String" name="tipoADN"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getFuerza" returnType="int" visibility="public"/>
+        <Method name="setFuerza" returnType="void" visibility="public">
+          <Argument type="int" name="Fuerza"/>
+        </Method>
+        <Method name="imprimirInfo" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <IsRelation name="is" source="sistemadecriaturas.CriaturaAcuatica" target="sistemadecriaturas.Criatura"/>
+    <IsRelation name="is" source="sistemadecriaturas.CriaturaTerrestre" target="sistemadecriaturas.Criatura"/>
+    <IsRelation name="is" source="sistemadecriaturas.CriaturaVoladora" target="sistemadecriaturas.Criatura"/>
+  </ClassDiagramRelations>
+</ClassDiagram>

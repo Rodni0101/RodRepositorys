@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="SistemaNavesEspaciales">
+  <ClassDiagramComponents>
+    <Class name="Nave" package="sistemanavesespaciales" visibility="public" xPosition="649.0" yPosition="24.0">
+      <Fields>
+        <Field name="Velocidad" type="double" visibility="private"/>
+        <Field name="tipoCombustible" type="String" visibility="private"/>
+        <Field name="Nombre" type="String" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="double" name="Velocidad"/>
+          <Argument type="String" name="tipoCombustible"/>
+          <Argument type="String" name="Nombre"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getVelocidad" returnType="double" visibility="public"/>
+        <Method name="setVelocidad" returnType="void" visibility="public">
+          <Argument type="double" name="Velocidad"/>
+        </Method>
+        <Method name="getTipoCombustible" returnType="String" visibility="public"/>
+        <Method name="setTipoCombustible" returnType="void" visibility="public">
+          <Argument type="String" name="tipoCombustible"/>
+        </Method>
+        <Method name="getNombre" returnType="String" visibility="public"/>
+        <Method name="setNombre" returnType="void" visibility="public">
+          <Argument type="String" name="Nombre"/>
+        </Method>
+        <Method name="mostrarInfo" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="NaveTripulada" package="sistemanavesespaciales" visibility="public" xPosition="-118.0" yPosition="507.0">
+      <Fields>
+        <Field name="cantPasajeros" type="int" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="int" name="cantPasajeros"/>
+          <Argument type="double" name="Velocidad"/>
+          <Argument type="String" name="tipoCombustible"/>
+          <Argument type="String" name="Nombre"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getCantPasajeros" returnType="int" visibility="public"/>
+        <Method name="setCantPasajeros" returnType="void" visibility="public">
+          <Argument type="int" name="cantPasajeros"/>
+        </Method>
+        <Method name="mostrarInfo" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="NaveDeCarga" package="sistemanavesespaciales" visibility="public" xPosition="499.0" yPosition="507.0">
+      <Fields>
+        <Field name="Carga" type="double" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="double" name="Carga"/>
+          <Argument type="double" name="Velocidad"/>
+          <Argument type="String" name="tipoCombustible"/>
+          <Argument type="String" name="Nombre"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getCarga" returnType="double" visibility="public"/>
+        <Method name="setCarga" returnType="void" visibility="public">
+          <Argument type="double" name="Carga"/>
+        </Method>
+        <Method name="mostrarInfo" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="NaveCombate" package="sistemanavesespaciales" visibility="public" xPosition="1084.0" yPosition="507.0">
+      <Fields>
+        <Field name="nivelArmamento" type="int" visibility="private"/>
+        <Field name="escudo" type="int" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="int" name="nivelArmamento"/>
+          <Argument type="int" name="escudo"/>
+          <Argument type="double" name="Velocidad"/>
+          <Argument type="String" name="tipoCombustible"/>
+          <Argument type="String" name="Nombre"/>
+        </Constructor>
+        <Constructor visibility="public">
+          <Argument type="int" name="nivelArmamento"/>
+          <Argument type="int" name="escudo"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="mostrarInfo" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <IsRelation name="is" source="sistemanavesespaciales.NaveDeCarga" target="sistemanavesespaciales.Nave"/>
+    <IsRelation name="is" source="sistemanavesespaciales.NaveTripulada" target="sistemanavesespaciales.Nave"/>
+    <IsRelation name="is" source="sistemanavesespaciales.NaveCombate" target="sistemanavesespaciales.Nave"/>
+  </ClassDiagramRelations>
+</ClassDiagram>
