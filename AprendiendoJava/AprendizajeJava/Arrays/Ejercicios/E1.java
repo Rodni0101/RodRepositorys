@@ -11,7 +11,7 @@ public class E1 {
         System.out.println("1. Buscar numero");
         System.out.println("2. Salir");
         opcion = leer.nextInt();
-
+        leer.close();
         switch (opcion) {
             case 1 -> {
                 int numeroBuscado;
@@ -27,9 +27,9 @@ public class E1 {
 
                     boolean encontrado = false;
 
-                    for (int i = 0; i < numeros.length; i++) {
-                        if (numeros[i] == numeroBuscado) {
-                            System.out.println("El número está en la posición " + i);
+                    for (int v = 0; v < numeros.length; v++) {
+                        if (numeros[v] == numeroBuscado) {
+                            System.out.println("El número está en la posición " + v);
                             encontrado = true;
                             break;
                         }
