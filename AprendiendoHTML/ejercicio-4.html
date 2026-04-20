@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Par o Impar</title>
+</head>
+<body>
+    <h1>Ejercicio Par o Impar</h1>
+    <h4>Logica basica</h4>
+    <hr>
+    <input type="number" id="numero">
+    <button id="boton">Verificar</button>
+    <p id="resultado"></p>
+    <script>
+        let numero = document.getElementById("numero");
+        let boton = document.getElementById("boton");
+        let resultado = document.getElementById("resultado");
+
+        boton.addEventListener("click",function(){
+            ///parsInt para numeros
+            let valor = parseInt (numero.value);
+
+            if(valor === ""){
+                resultado.textContent = "Selecciona un numero: ";
+                
+                return;
+            }
+
+            if(valor < 0){
+
+                ///aca tambien se puede usar != (pero ojo se tendria que invertir) Ejemplo:
+                /*
+                if(valor % 2 != 0){
+                    resultado.textContent = "Numero impar negativo";
+                }else{
+                    resultado.textContent = "Numero par negativo";
+                }
+                    */
+                    
+                if(valor % 2 == 0){
+                    resultado.textContent = "Numero par negativo";
+                }else{
+                    resultado.textContent = "Numero impar negativo";
+                }
+            }else{
+                if(valor % 2 == 0){
+                    resultado.textContent = "Numero par";
+                }else{
+                    resultado.textContent = "Numero impar";
+                }
+            }
+            
+        });
+    </script>
+</body>
+</html>
