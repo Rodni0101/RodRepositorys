@@ -1,0 +1,63 @@
+
+body {
+    background-color: #7d8a99;
+    font-family: Arial, sans-serif;
+
+    /*Centrado*/
+    height: 100vh;
+    margin: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Centrar todo */
+.formulario {
+    width: 300px;
+    margin: 100px auto;
+    /* centra horizontal */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    /*Agregacion*/
+    background-color: white;
+    padding: 25px;
+    border: 2px solid black; /*Marco*/
+    border-radius: 10px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 3);
+}
+
+/* Cada campo */
+.campo {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Inputs */
+input {
+    padding: 5px;
+}
+
+/* Botón */
+button {
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+}
+
+button:hover{
+    background-color:lightgrey;
+    transform: scale(1.05);
+}
+
+.logo{
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 30px;
+}
