@@ -11,7 +11,7 @@ public class E1 {
         System.out.println("1. Buscar numero");
         System.out.println("2. Salir");
         opcion = leer.nextInt();
-        leer.close();
+        
         switch (opcion) {
             case 1 -> {
                 int numeroBuscado;
