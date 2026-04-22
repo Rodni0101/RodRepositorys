@@ -4,14 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--Ingresar css y icono-->
     <link rel="stylesheet" href="css/Estilo.css">
     <link rel="shortcut icon" href="icono/favicon.ico">
-    <title>Document</title>
+    <title>Prueba de Login</title>
 </head>
 
 <body>
     <div class="formulario">
-        <h1><em>LOGIN</em></h1>
+        <h1><em>Register</em></h1>
         <div class="campo">
             <label for="correo">Ingresa tu email</label>
             <input type="email" id="correo">
@@ -20,8 +21,11 @@
             <label for="password">Ingresa tu contraseña</label>
             <input type="password" id="password">
         </div>
-        <button type="button">Verifica</button>
+        <!--Recuerda declarar los ID de los-->
+        <button type="button" id="button">Verifica</button>
+        <!--Insertar Js a HTML-->
+        <script src="./Logica/Logic.js"></script>
     </div>
 </body>
 
-</html> 
+</html>
