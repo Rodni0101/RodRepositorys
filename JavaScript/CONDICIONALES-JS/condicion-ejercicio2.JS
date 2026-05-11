@@ -4,10 +4,21 @@ let nota3 = parseInt(prompt("Ingresa la tercera nota"))
 
 let promedio = (nota1 + nota2 + nota3) / 3
 
-if(promedio >= 4.0){
+document.write("---Ejercicio 2---" + "<br>")
+if (promedio >= 4.0) {
     document.write("Nota final = " + promedio + "<br>")
-    document.write("Regular")
-}else{
-    document.write("Nota final = " + promedio + "<br>")
-    document.write("Reprobado")
+    document.write("Excelente <br>")
 }
+else if (promedio >= 3.0) {
+    document.write("Nota final = " + promedio + "<br>")
+    document.write("Regular <br>")
+}
+else {
+    document.write("Nota final = " + promedio + "<br>")
+    document.write("Reprobado <br>")
+}
+
+
+document.write("--------------------------")
+document.write("<br>")
+alert("Ejercicio 2 terminado")
