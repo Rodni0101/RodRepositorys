@@ -1,4 +1,5 @@
-alert ("Seleccione una de estas palabras a traducit (Casa, Perro, Mesa, Cat)" + "<br>")
+/*
+alert("Seleccione una de estas palabras a traducit (Casa, Perro, Mesa, Cat) <br>")
 let opcion = prompt("Ingrese su palabra")
 
 switch (opcion) {
@@ -14,9 +15,10 @@ switch (opcion) {
         document.write("Table")
         break;
 
-    case "Cat":
+    case "Gato":
         document.write("Cat")
         break;
 }
 
 alert("Ejercicio terminado")
+*/
