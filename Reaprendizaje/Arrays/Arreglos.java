@@ -1,9 +1,18 @@
+import java.util.Scanner;
+
 public class Arreglos {
     public static void main(String[] args) {
-        int [] numeros = {1,2,3,4,5};
+        Scanner leer = new Scanner(System.in);
+        System.out.println("Ingresa tu nombre: ");
+        String nombre = leer.nextLine();
 
-        for(int v = 0; v < numeros.length; v++){
-            System.out.println("Posicion del arreglo: " + v + "-> Valor = " + numeros[v]);
+        if (nombre.equals("Rodney")) {
+            for (int v = 0; v <= 10; v++) {
+                System.out.println("Estas mondao");
+            }
+        } else {
+            System.out.println("Hola " + nombre);
         }
+        leer.close();
     }
 }
