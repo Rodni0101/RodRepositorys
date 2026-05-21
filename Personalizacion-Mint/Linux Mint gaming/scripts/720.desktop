@@ -1,0 +1,19 @@
+[Desktop Entry]
+Categories=Game;
+Comment[es_ES]=Steam Deck UI con Gamescope a 1280x720
+Comment=Steam Deck UI con Gamescope a 1280x720
+Exec='/home/masies/.local/bin/steam-gamemode-720p.sh'
+GenericName[es_ES]=
+GenericName=
+Icon=steamdeck-gaming-return
+MimeType=
+Name[es_ES]=Steam Game Mode (720p)
+Name=Steam Game Mode (720p)
+Path=
+StartupNotify=true
+Terminal=false
+TerminalOptions=
+Type=Application
+X-KDE-RunOnDiscreteGpu=false
+X-KDE-SubstituteUID=false
+X-KDE-Username=

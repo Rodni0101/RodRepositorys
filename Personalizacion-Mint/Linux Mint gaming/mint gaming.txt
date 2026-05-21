@@ -1,0 +1,128 @@
+KDE (recomendable no obligatorio)
+Instalar KDE
+sudo apt install kde-standard sddm
+
+________________________________________________________
+
+Últimos Drivers Gráficos (Muy importante para el Gaming)
+NVIDIA
+Nota1:
+590 es el último driver el día de hoy, no están listos para Ubuntu/Mint
+este método instala el ultimo driver nvidia empaquetado para ubuntu/mint.
+los paquetes "pinning" NO SON DRIVERS
+
+Nota2:
+existe el método estándar para instalar drivers nvidia con los repositorios
+add-apt-repository ppa:graphics-drivers/ppa <--
+este método instala los drivers 580.95.05
+con el método que muestro instala los drivers 580.105.08
+No es recomendado para el gaming usar el método add-apt-repository ppa:graphics-drivers/ppa
+
+Eliminar drivers previos:
+sudo apt purge 'nvidia*'
+sudo apt autoremove
+reboot
+
+curl -fsSL https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-keyring_1.1-1_all.deb -o cuda-keyring.deb
+sudo dpkg -i cuda-keyring.deb
+sudo apt update
+
+crear / editar
+sudo nano /etc/apt/preferences.d/nvidia
+agregar:
+Package: *
+Pin: origin developer.download.nvidia.com
+Pin-Priority: 600
+
+apt search nvidia-driver
+sudo apt install nvidia-driver-580
+acepta DKMS, y si pregunta por Secure Boot -> NO
+
+__________________________________________________________
+
+Instalar MESA (AMD/Intel)
+sudo add-apt-repository ppa:kisak/kisak-mesa
+sudo apt update
+sudo apt upgrade
+sudo apt install mesa-vulkan-drivers mesa-vdpau-drivers mesa-va-drivers xwayland weston libegl-mesa0 libwayland-egl1-mesa libgl1-mesa-dri:i386 mesa-vulkan-drivers:i386
+Intel Only:
+sudo apt install i965-va-driver intel-gpu-tools
+
+____________________________________________________________
+
+Desintalar apps activas de mint cinnamon (SOLO si vais a usar KDE integramente)
+sudo apt purge mintupdate mintreport blueman
+____________________________________________________________
+
+comprobar sesión wayland o x11:
+echo $XDG_SESSION_TYPE
+
+____________________________________________________________
+
+
+Instalar tienda flatpack:
+sudo apt install flatpak plasma-discover-backend-flatpak bubblewrap
+flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+___________________________________________________________
+
+Paquetes para el gaming:
+sudo apt install lutris steam steam-devices mangohud goverlay gamemode
+
+Protonplus en tienda versión flatpack.
+
+__________________________________________________________
+
+wine última versión:
+sudo dpkg --add-architecture i386 
+sudo mkdir -pm755 /etc/apt/keyrings
+wget -O - https://dl.winehq.org/wine-builds/winehq.key | sudo gpg --dearmor -o /etc/apt/keyrings/winehq-archive.key -
+Noble 24.04 (actual del tutorial)
+sudo wget -NP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/ubuntu/dists/noble/winehq-noble.sources
+
+Resolute 26.04 (Fecha del tutorial no existe oficialmente, será lanzada en abril de 2026)
+sudo wget -NP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/ubuntu/dists/resolute/winehq-noble.sources
+
+sudo apt update && sudo apt install --install-recommends winehq-devel winetricks
+
+__________________________________________________________
+
+Entorno Gaming SteamOS (opcional requiere wayland)
+Compilar Gamescope, queda nativo en el sistema y tiene menos problemas:
+
+compilar dependencia más actul:
+wayland-server:
+sudo apt install meson ninja-build pkg-config libffi-dev libexpat1-dev libxml2-dev gcc graphviz doxygen xsltproc xmlto
+
+git clone https://gitlab.freedesktop.org/wayland/wayland.git
+cd wayland
+git checkout 1.23.0
+meson setup build
+ninja -C build
+sudo ninja -C build install
+
+----------------------------------------------------------
+
+sudo apt install libbenchmark1.8.3 libdisplay-info1 libevdev-dev libgav1-1 libgudev-1.0-dev libmtdev-dev libseat1 libstb0 libwacom-dev libxcb-ewmh2 libxcb-shape0-dev libxcb-xfixes0-dev libxmu-headers libyuv0 libx11-xcb-dev libxres-dev  libxmu-dev libseat-dev libinput-dev libxcb-composite0-dev libxcb-ewmh-dev libxcb-icccm4-dev libxcb-res0-dev libcap-dev wayland-protocols libvulkan-dev libwayland-dev libx11-dev cmake pkg-config meson libxdamage-dev libxcomposite-dev libxcursor-dev libxxf86vm-dev libxtst-dev libxkbcommon-dev libdrm-dev libpixman-1-dev libdecor-0-dev glslang-tools libbenchmark-dev libsdl2-dev libglm-dev libeis-dev libavif-dev libluajit-5.1-dev
+
+git clone https://github.com/ValveSoftware/gamescope.git
+
+cd gamescope
+
+git submodule update --init --recursive
+
+meson build/
+
+ninja -C build/
+
+meson install -C build/ --skip-subprojects
+
+___________________________________________________
+
+Compilado nativo en el sistema:
+gamescope -e -- steam -gamepadui <- en el terminal para test
+
+Optimización para nvidia:
+gamescope -e --prefer-vk-device --disable-color-management -- steam -gamepadui
+
+si hay tearing o stutter
+__GL_SYNC_TO_VBLANK=1 gamescope -e -- steam -gamepadui
