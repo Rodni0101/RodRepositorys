@@ -24,11 +24,7 @@ echo "Este es el primero numero, $numero1. Y ya";
 //for
 
 for($v = 0; $v <=10; $v++){
-    echo "Hola Rodney";
+    echo "Hola Rodney <br>";
 }
 
-$valor = 1;
-while($valor = 1){
-    echo "El valor vale = , $valor";
-}
 ?>
