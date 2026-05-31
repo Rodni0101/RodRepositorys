@@ -21,8 +21,6 @@ public class Eje1 {
             int n2 = Integer.parseInt(leer.nextLine());
 
             System.out.println("----------------------");
-            System.out.println("Presione enter para continuar");
-            leer.nextLine(); 
 
             System.out.println("Seleccione la operacion a realizar");
             System.out.println("1. Suma");
