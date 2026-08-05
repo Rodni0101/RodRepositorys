@@ -1,0 +1,147 @@
+/* Formulario principal — estilo similar a Proyecto_Personal */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(-45deg, #0f4c81, #2563eb, #3b82f6, #1e40af);
+    background-size: 400% 400%;
+    animation: fondoAnimado 15s ease infinite;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+}
+
+form {
+    width: 100%;
+    max-width: 720px;
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.18);
+}
+
+.titulo-form {
+    text-align: center;
+    color: #0f4c81;
+    margin-bottom: 8px;
+    font-size: 26px;
+}
+
+.subtitulo-form {
+    text-align: center;
+    color: #64748b;
+    margin-bottom: 25px;
+    font-size: 15px;
+}
+
+fieldset {
+    border: 1px solid #dbe4ef;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 20px;
+}
+
+legend {
+    color: #0f4c81;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 0 10px;
+}
+
+label {
+    display: block;
+    margin-bottom: 16px;
+    font-weight: 600;
+    color: #374151;
+}
+
+input {
+    width: 100%;
+    margin-top: 8px;
+    padding: 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    background: #fafafa;
+    font-size: 15px;
+}
+
+input:focus {
+    outline: none;
+    background: white;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.18);
+}
+
+.mensaje {
+    padding: 14px 16px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.mensaje.exito {
+    background: #ecfdf5;
+    color: #047857;
+    border: 1px solid #a7f3d0;
+}
+
+.mensaje.error {
+    background: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+}
+
+.acciones {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.acciones button,
+.btn-link {
+    padding: 14px 18px;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    transition: 0.3s;
+    color: white;
+}
+
+.btn-guardar { background: #2563eb; }
+.btn-buscar { background: #64748b; }
+.btn-actualizar { background: #0d9488; }
+.btn-eliminar { background: #dc2626; }
+.btn-limpiar { background: #475569; }
+.btn-dashboard { background: #0f4c81; }
+
+.acciones button:hover,
+.btn-link:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.05);
+}
+
+@keyframes fondoAnimado {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@media (max-width: 600px) {
+    form { padding: 22px; }
+    .acciones { flex-direction: column; }
+    .acciones button,
+    .btn-link { width: 100%; }
+}
