@@ -21,13 +21,15 @@ $mensaje = "";
 $tipo = "";
 
 $codigo = "";
-$nombre = "";
-$categoria = "";
-$precio = "";
-$cantidad = "";
+
+/* Si una búsqueda encuentra un producto, la tabla se filtra
+   para mostrar únicamente ese resultado. */
+$productoEncontrado = null;
 
 /* ==========================
    MENSAJES (flash desde sesión)
+   Esto sigue vivo porque index.php redirige para acá
+   después de actualizar un producto.
 ========================== */
 
 if (isset($_SESSION["mensaje"])) {
@@ -39,20 +41,10 @@ if (isset($_SESSION["mensaje"])) {
 }
 
 /* ==========================
-   DATOS DEL FORMULARIO (persisten tras un búsqueda)
-========================== */
-
-if (isset($_SESSION["form_producto"])) {
-
-    $codigo = $_SESSION["form_producto"]["codigo"] ?? "";
-    $nombre = $_SESSION["form_producto"]["nombre"] ?? "";
-    $categoria = $_SESSION["form_producto"]["categoria"] ?? "";
-    $precio = $_SESSION["form_producto"]["precio"] ?? "";
-    $cantidad = $_SESSION["form_producto"]["cantidad"] ?? "";
-}
-
-/* ==========================
    ACCIONES
+   Buscar y eliminar se resuelven en el mismo request
+   (sin redirect) para poder mostrar el aviso al toque
+   y, en el caso de buscar, filtrar la tabla.
 ========================== */
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -62,193 +54,149 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if (!hash_equals($_SESSION["csrf_token"], $tokenRecibido)) {
 
-        $_SESSION["mensaje"] = "Sesión inválida o expirada. Intente de nuevo.";
-        $_SESSION["tipo"] = "error";
+        $mensaje = "Sesión inválida o expirada. Intente de nuevo.";
+        $tipo = "error";
 
-        header("Location: dashboard.php");
-        exit;
-    }
+    } else {
 
-    $accion = $_POST["accion"] ?? "";
+        $accion = $_POST["accion"] ?? "";
 
-    $codigo = trim($_POST["codigo"] ?? "");
+        $codigo = trim($_POST["codigo"] ?? "");
 
-    /* ======================
-       BUSCAR
-    ====================== */
+        /* ======================
+           BUSCAR
+        ====================== */
 
-    if ($accion === "buscar") {
+        if ($accion === "buscar") {
 
-        if ($codigo === "") {
+            if ($codigo === "") {
 
-            $_SESSION["mensaje"] = "Ingrese un código.";
-            $_SESSION["tipo"] = "error";
+                $mensaje = "Ingrese un código.";
+                $tipo = "error";
 
-            header("Location: dashboard.php");
-            exit;
-        }
+            } else {
 
-        $stmt = $conexion->prepare("
-            SELECT
-                codigo,
-                nombre,
-                categoria,
-                precio,
-                cantidad
-            FROM productos
-            WHERE codigo = ?
-        ");
+                $stmt = $conexion->prepare("
+                    SELECT
+                        codigo,
+                        nombre,
+                        categoria,
+                        precio,
+                        cantidad
+                    FROM productos
+                    WHERE codigo = ?
+                ");
 
-        $stmt->bind_param("s", $codigo);
-        $stmt->execute();
+                $stmt->bind_param("s", $codigo);
+                $stmt->execute();
 
-        $consulta = $stmt->get_result();
+                $consulta = $stmt->get_result();
 
-        if ($consulta->num_rows > 0) {
+                if ($consulta->num_rows > 0) {
 
-            $producto = $consulta->fetch_assoc();
+                    $productoEncontrado = $consulta->fetch_assoc();
 
-            $_SESSION["form_producto"] = [
-                "codigo" => $producto["codigo"],
-                "nombre" => $producto["nombre"],
-                "categoria" => $producto["categoria"],
-                "precio" => $producto["precio"],
-                "cantidad" => $producto["cantidad"],
-            ];
+                    $mensaje = "Producto encontrado.";
+                    $tipo = "exito";
 
-            $_SESSION["mensaje"] = "Producto encontrado.";
-            $_SESSION["tipo"] = "exito";
-
-        } else {
-
-            unset($_SESSION["form_producto"]);
-
-            $_SESSION["mensaje"] = "Producto no encontrado.";
-            $_SESSION["tipo"] = "error";
-        }
-
-        $stmt->close();
-
-        header("Location: dashboard.php");
-        exit;
-    }
-
-    /* ======================
-       ACTUALIZAR
-       Se manda el código explícitamente por GET en vez de
-       confiar ciegamente en lo último guardado en sesión,
-       así evitamos editar el producto equivocado si el
-       usuario cambió el código en el input sin buscar antes.
-    ====================== */
-
-    if ($accion === "actualizar") {
-
-        if ($codigo === "") {
-
-            $_SESSION["mensaje"] = "Ingrese un código para actualizar.";
-            $_SESSION["tipo"] = "error";
-
-            if ($accion === "actualizar") {
-                if ($codigo === "" || $nombre === "" || $categoria === "" || $precio === "" || $cantidad === "") {
-                    $mensaje = "Complete todos los campos antes de actualizar.";
-                    $tipo = "error";
                 } else {
-                    $existe = $conexion->prepare("SELECT codigo FROM productos WHERE codigo = ?");
-                    $existe->bind_param("s", $codigo);
-                    $existe->execute();
-                    $resultado = $existe->get_result();
 
-                    if ($resultado->num_rows === 0) {
-                        $mensaje = "No se puede actualizar: el código no existe. Busque primero el producto.";
-                        $tipo = "error";
-                    } else {
-                        $actualizar = $conexion->prepare(
-                            "UPDATE productos SET nombre = ?, categoria = ?, precio = ?, cantidad = ? WHERE codigo = ?"
-                        );
-                        $precio_num = (float) $precio;
-                        $cantidad_num = (int) $cantidad;
-                        $actualizar->bind_param("ssdis", $nombre, $categoria, $precio_num, $cantidad_num, $codigo);
-
-                        if ($actualizar->execute()) {
-                            $mensaje = "Producto actualizado correctamente.";
-                            $tipo = "exito";
-                        } else {
-                            $mensaje = "Error al actualizar: " . $conexion->error;
-                            $tipo = "error";
-                        }
-                        $actualizar->close();
-                    }
-                    $existe->close();
+                    $mensaje = "Producto no encontrado.";
+                    $tipo = "error";
                 }
+
+                $stmt->close();
             }
-            header("Location: dashboard.php");
-            exit;
         }
 
-        header("Location: index.php?codigo=" . urlencode($codigo));
-        exit;
-    }
+        /* ======================
+           ACTUALIZAR
+           El formulario completo de edición vive en index.php,
+           así que acá solo validamos el código y redirigimos.
+        ====================== */
 
-    /* ======================
-       ELIMINAR
-    ====================== */
+        if ($accion === "actualizar") {
 
-    if ($accion === "eliminar") {
+            if ($codigo === "") {
 
-        if ($codigo === "") {
+                $mensaje = "Ingrese un código para actualizar.";
+                $tipo = "error";
 
-            $_SESSION["mensaje"] = "Ingrese un código.";
-            $_SESSION["tipo"] = "error";
+            } else {
 
-            header("Location: dashboard.php");
-            exit;
+                header("Location: index.php?codigo=" . urlencode($codigo));
+                exit;
+            }
         }
 
-        $stmt = $conexion->prepare("
-            DELETE
-            FROM productos
-            WHERE codigo = ?
-        ");
+        /* ======================
+           ELIMINAR
+        ====================== */
 
-        $stmt->bind_param("s", $codigo);
-        $stmt->execute();
+        if ($accion === "eliminar") {
 
-        if ($stmt->affected_rows > 0) {
+            if ($codigo === "") {
 
-            unset($_SESSION["form_producto"]);
+                $mensaje = "Ingrese un código.";
+                $tipo = "error";
 
-            $_SESSION["mensaje"] = "Producto eliminado correctamente.";
-            $_SESSION["tipo"] = "exito";
+            } else {
 
-        } else {
+                $stmt = $conexion->prepare("
+                    DELETE
+                    FROM productos
+                    WHERE codigo = ?
+                ");
 
-            $_SESSION["mensaje"] = "No existe ese producto.";
-            $_SESSION["tipo"] = "error";
+                $stmt->bind_param("s", $codigo);
+                $stmt->execute();
+
+                if ($stmt->affected_rows > 0) {
+
+                    $mensaje = "Producto eliminado correctamente.";
+                    $tipo = "exito";
+
+                    /* El código ya no existe, se limpia el input. */
+                    $codigo = "";
+
+                } else {
+
+                    $mensaje = "No existe ese producto.";
+                    $tipo = "error";
+                }
+
+                $stmt->close();
+            }
         }
-
-        $stmt->close();
-
-        header("Location: dashboard.php");
-        exit;
     }
 }
 
 /* ==========================
    TABLA
+   Si hubo una búsqueda exitosa, se muestra solo ese producto.
+   Si no, se lista todo el inventario.
 ========================== */
 
-$sql = "
-SELECT
-    codigo,
-    nombre,
-    categoria,
-    precio,
-    cantidad
-FROM productos
-ORDER BY nombre ASC
-";
+if ($productoEncontrado !== null) {
 
-$resultado = $conexion->query($sql);
+    $productos = [$productoEncontrado];
+
+} else {
+
+    $sql = "
+    SELECT
+        codigo,
+        nombre,
+        categoria,
+        precio,
+        cantidad
+    FROM productos
+    ORDER BY nombre ASC
+    ";
+
+    $resultado = $conexion->query($sql);
+    $productos = $resultado ? $resultado->fetch_all(MYSQLI_ASSOC) : [];
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -327,7 +275,19 @@ $resultado = $conexion->query($sql);
 
         <section class="tabla">
 
-            <h2>Productos registrados</h2>
+            <div class="tabla-header">
+
+                <h2>
+                    <?= $productoEncontrado !== null ? "Resultado de la búsqueda" : "Productos registrados" ?>
+                </h2>
+
+                <?php if ($productoEncontrado !== null): ?>
+
+                    <a href="dashboard.php" class="ver-todos">
+                        ✕ Ver todos los productos
+                    </a>
+                <?php endif; ?>
+            </div>
 
             <table>
 
@@ -345,35 +305,25 @@ $resultado = $conexion->query($sql);
 
                 <tbody>
 
-                    <?php if ($resultado && $resultado->num_rows > 0): ?>
+                    <?php if (count($productos) > 0): ?>
 
-                        <?php while ($fila = $resultado->fetch_assoc()): ?>
+                        <?php foreach ($productos as $fila): ?>
 
                             <tr>
-                                <td>
-                                    <?= htmlspecialchars($fila["codigo"]) ?>
-                                </td>
-                                <td>
-                                    <?= htmlspecialchars($fila["nombre"]) ?>
-                                </td>
-                                <td>
-                                    <?= htmlspecialchars($fila["categoria"]) ?>
-                                </td>
-                                <td>$
-                                    <?= number_format((float) $fila["precio"], 0, ",", ".") ?>
-                                </td>
-                                <td>
-                                    <?= (int) $fila["cantidad"] ?>
-                                </td>
+                                <td data-label="Código"><?= htmlspecialchars($fila["codigo"]) ?></td>
+                                <td data-label="Nombre"><?= htmlspecialchars($fila["nombre"]) ?></td>
+                                <td data-label="Categoría"><?= htmlspecialchars($fila["categoria"]) ?></td>
+                                <td data-label="Precio">$ <?= number_format((float) $fila["precio"], 0, ",", ".") ?></td>
+                                <td data-label="Cantidad"><?= (int) $fila["cantidad"] ?></td>
                             </tr>
 
-                        <?php endwhile; ?>
+                        <?php endforeach; ?>
 
                     <?php else: ?>
 
                         <tr>
                             <td colspan="5" class="vacio">
-                                No hay productos registrados.
+                                <?= $productoEncontrado === null ? "No hay productos registrados." : "Producto no encontrado." ?>
                             </td>
                         </tr>
 
