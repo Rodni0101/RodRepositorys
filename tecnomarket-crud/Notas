@@ -1,0 +1,10 @@
+.btn-buscar { background: #64748b; }
+.btn-actualizar { background: #0d9488; }
+.btn-eliminar { background: #dc2626; }
+
+
+
+ <button type="submit" name="accion" value="buscar" class="btn-buscar">Buscar</button>
+            <button type="submit" name="accion" value="actualizar" class="btn-actualizar">Actualizar</button>
+            <button type="submit" name="accion" value="eliminar" class="btn-eliminar"
+                onclick="return confirm('¿Está seguro de eliminar este producto?');">Eliminar</button>

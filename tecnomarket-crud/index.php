@@ -28,7 +28,7 @@ if (isset($_SESSION["form_producto"])) {
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $accion = $_POST["accion"] ?? "";
 
-    if ($accion === "limpiar") {
+    if ($accion === "nuevo") {
         unset($_SESSION["form_producto"]);
         $_SESSION["mensaje"] = "Formulario limpiado correctamente.";
         $_SESSION["tipo"] = "exito";
@@ -240,11 +240,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <div class="acciones">
             <button type="submit" name="accion" value="guardar" class="btn-guardar">Guardar</button>
-            <button type="submit" name="accion" value="buscar" class="btn-buscar">Buscar</button>
             <button type="submit" name="accion" value="actualizar" class="btn-actualizar">Actualizar</button>
-            <button type="submit" name="accion" value="eliminar" class="btn-eliminar"
-                onclick="return confirm('¿Está seguro de eliminar este producto?');">Eliminar</button>
-            <button type="submit" name="accion" value="limpiar" class="btn-limpiar">Limpiar</button>
+            <button type="submit" name="accion" value="nuevo" class="btn-nuevo">Nuevo</button>
             <a class="btn-link btn-dashboard" href="dashboard.php">Dashboard</a>
         </div>
     </form>

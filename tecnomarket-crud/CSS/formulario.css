@@ -121,12 +121,11 @@ input:focus {
 }
 
 .btn-guardar { background: #2563eb; }
-.btn-buscar { background: #64748b; }
-.btn-actualizar { background: #0d9488; }
-.btn-eliminar { background: #dc2626; }
-.btn-limpiar { background: #475569; }
+.btn-nuevo { background: #475569; }
 .btn-dashboard { background: #0f4c81; }
-
+.btn-actualizar{
+    background:#0d9488;
+}
 .acciones button:hover,
 .btn-link:hover {
     transform: translateY(-2px);
