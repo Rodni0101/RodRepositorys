@@ -7,7 +7,7 @@
 }
 
 body {
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(-45deg, #0f4c81, #2563eb, #3b82f6, #1e40af);
     background-size: 400% 400%;
     animation: fondoAnimado 15s ease infinite;
@@ -72,6 +72,11 @@ input {
     font-size: 15px;
 }
 
+input[type='file'] {
+    padding: 10px;
+    background: #f8fafc;
+}
+
 input:focus {
     outline: none;
     background: white;
@@ -106,6 +111,31 @@ input:focus {
     margin-top: 25px;
 }
 
+.preview-imagen {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+}
+
+.preview-imagen img {
+    max-width: 220px;
+    border-radius: 12px;
+    border: 2px solid #dbeafe;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.15);
+}
+
+.btn-ver-imagen {
+    display: inline-block;
+    padding: 10px 14px;
+    background: #2563eb;
+    color: white;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
 .acciones button,
 .btn-link {
     padding: 14px 18px;
@@ -120,11 +150,17 @@ input:focus {
     color: white;
 }
 
-.btn-guardar { background: #2563eb; }
-.btn-nuevo { background: #475569; }
-.btn-dashboard { background: #0f4c81; }
-.btn-actualizar{
-    background:#0d9488;
+.btn-guardar {
+    background: #2563eb;
+}
+.btn-nuevo {
+    background: #475569;
+}
+.btn-dashboard {
+    background: #0f4c81;
+}
+.btn-actualizar {
+    background: #0d9488;
 }
 .acciones button:hover,
 .btn-link:hover {
@@ -133,14 +169,26 @@ input:focus {
 }
 
 @keyframes fondoAnimado {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 @media (max-width: 600px) {
-    form { padding: 22px; }
-    .acciones { flex-direction: column; }
+    form {
+        padding: 22px;
+    }
+    .acciones {
+        flex-direction: column;
+    }
     .acciones button,
-    .btn-link { width: 100%; }
+    .btn-link {
+        width: 100%;
+    }
 }

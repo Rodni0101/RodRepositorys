@@ -1,6 +1,32 @@
 <?php
 include "PHP/conexion.php";
 
+if (empty($_SESSION["csrf_token"])) {
+    $_SESSION["csrf_token"] = bin2hex(random_bytes(32));
+}
+
+function subirImagenProducto(array $archivo, string $directorio): array
+{
+    if (!isset($archivo["name"]) || $archivo["error"] !== UPLOAD_ERR_OK) {
+        return ["ok" => false, "mensaje" => "No se seleccionó una imagen válida.", "ruta" => ""];
+    }
+
+    if (!is_dir($directorio)) {
+        mkdir($directorio, 0777, true);
+    }
+
+    $nombreOriginal = basename($archivo["name"]);
+    $extension = pathinfo($nombreOriginal, PATHINFO_EXTENSION);
+    $nombreArchivo = uniqid("prod_", true) . ($extension !== "" ? "." . strtolower($extension) : "");
+    $rutaDestino = $directorio . "/" . $nombreArchivo;
+
+    if (!move_uploaded_file($archivo["tmp_name"], $rutaDestino)) {
+        return ["ok" => false, "mensaje" => "No se pudo guardar la imagen en el servidor.", "ruta" => ""];
+    }
+
+    return ["ok" => true, "mensaje" => "", "ruta" => "uploads/" . $nombreArchivo];
+}
+
 $mensaje = "";
 $tipo = "";
 
@@ -15,6 +41,7 @@ $nombre = "";
 $categoria = "";
 $precio = "";
 $cantidad = "";
+$imagen = "";
 
 // Recuperar datos del formulario guardados en sesión (después de buscar o error)
 if (isset($_SESSION["form_producto"])) {
@@ -23,6 +50,7 @@ if (isset($_SESSION["form_producto"])) {
     $categoria = $_SESSION["form_producto"]["categoria"] ?? "";
     $precio = $_SESSION["form_producto"]["precio"] ?? "";
     $cantidad = $_SESSION["form_producto"]["cantidad"] ?? "";
+    $imagen = $_SESSION["form_producto"]["imagen"] ?? "";
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -41,6 +69,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $categoria = trim($_POST["categoria"] ?? "");
     $precio = trim($_POST["precio"] ?? "");
     $cantidad = trim($_POST["cantidad"] ?? "");
+    $imagen = trim($_POST["imagen_actual"] ?? "");
+    $subidaError = "";
+
+    if (isset($_FILES["imagen"]) && $_FILES["imagen"]["error"] !== UPLOAD_ERR_NO_FILE) {
+        $resultadoSubida = subirImagenProducto($_FILES["imagen"], __DIR__ . "/uploads");
+        if ($resultadoSubida["ok"]) {
+            $imagen = $resultadoSubida["ruta"];
+        } else {
+            $subidaError = $resultadoSubida["mensaje"];
+        }
+    }
 
     $_SESSION["form_producto"] = [
         "codigo" => $codigo,
@@ -48,16 +87,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         "categoria" => $categoria,
         "precio" => $precio,
         "cantidad" => $cantidad,
+        "imagen" => $imagen,
     ];
 
     // BUSCAR
 
-    if ($accion === "buscar") {
+    if ($subidaError !== "") {
+        $mensaje = $subidaError;
+        $tipo = "error";
+    } elseif ($accion === "buscar") {
         if ($codigo === "") {
             $mensaje = "Ingrese el código del producto a buscar.";
             $tipo = "error";
         } else {
-            $stmt = $conexion->prepare("SELECT codigo, nombre, categoria, precio, cantidad FROM productos WHERE codigo = ?");
+            $stmt = $conexion->prepare("SELECT codigo, nombre, categoria, precio, cantidad, imagen FROM productos WHERE codigo = ?");
             $stmt->bind_param("s", $codigo);
             $stmt->execute();
             $resultado = $stmt->get_result();
@@ -69,12 +112,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $categoria = $fila["categoria"];
                 $precio = $fila["precio"];
                 $cantidad = $fila["cantidad"];
+                $imagen = $fila["imagen"] ?? "";
                 $_SESSION["form_producto"] = [
                     "codigo" => $codigo,
                     "nombre" => $nombre,
                     "categoria" => $categoria,
                     "precio" => $precio,
                     "cantidad" => $cantidad,
+                    "imagen" => $imagen,
                 ];
                 $mensaje = "Producto encontrado. Puede actualizar o eliminar.";
                 $tipo = "exito";
@@ -103,11 +148,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $tipo = "error";
             } else {
                 $insertar = $conexion->prepare(
-                    "INSERT INTO productos (codigo, nombre, categoria, precio, cantidad) VALUES (?, ?, ?, ?, ?)"
+                    "INSERT INTO productos (codigo, nombre, categoria, precio, cantidad, imagen) VALUES (?, ?, ?, ?, ?, ?)"
                 );
                 $precio_num = (float) $precio;
                 $cantidad_num = (int) $cantidad;
-                $insertar->bind_param("sssdi", $codigo, $nombre, $categoria, $precio_num, $cantidad_num);
+                $insertar->bind_param("sssdis", $codigo, $nombre, $categoria, $precio_num, $cantidad_num, $imagen);
 
                 if ($insertar->execute()) {
                     $_SESSION["ultimo_codigo"] = $codigo;
@@ -140,11 +185,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $tipo = "error";
             } else {
                 $actualizar = $conexion->prepare(
-                    "UPDATE productos SET nombre = ?, categoria = ?, precio = ?, cantidad = ? WHERE codigo = ?"
+                    "UPDATE productos SET nombre = ?, categoria = ?, precio = ?, cantidad = ?, imagen = ? WHERE codigo = ?"
                 );
                 $precio_num = (float) $precio;
                 $cantidad_num = (int) $cantidad;
-                $actualizar->bind_param("ssdis", $nombre, $categoria, $precio_num, $cantidad_num, $codigo);
+                $actualizar->bind_param("ssdiss", $nombre, $categoria, $precio_num, $cantidad_num, $imagen, $codigo);
 
                 if ($actualizar->execute()) {
                     $mensaje = "Producto actualizado correctamente.";
@@ -194,7 +239,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </head>
 
 <body>
-    <form action="index.php" method="post">
+    <form action="index.php" method="post" enctype="multipart/form-data">
         <h1 class="titulo-form">TecnoMarket S.A.S.</h1>
         <p class="subtitulo-form">Administración de productos — Laboratorio CRUD SENA</p>
 
@@ -236,6 +281,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <input id="cantidad" name="cantidad" type="number" min="0" step="1" placeholder="0"
                     value="<?= htmlspecialchars((string) $cantidad) ?>" />
             </label>
+
+            <label for="imagen">
+                Foto del producto
+                <input id="imagen" name="imagen" type="file" accept="image/*" />
+            </label>
+            <input type="hidden" name="imagen_actual" value="<?= htmlspecialchars($imagen) ?>">
+
+            <?php if ($imagen !== "") { ?>
+                <div class="preview-imagen">
+                    <img src="<?= htmlspecialchars($imagen) ?>" alt="Imagen del producto" />
+                    <a href="<?= htmlspecialchars($imagen) ?>" target="_blank" class="btn-link btn-ver-imagen">Ver
+                        imagen</a>
+                </div>
+            <?php } ?>
         </fieldset>
 
         <div class="acciones">

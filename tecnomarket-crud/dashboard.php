@@ -1,6 +1,10 @@
 <?php
 include "PHP/conexion.php";
 
+if (empty($_SESSION["csrf_token"])) {
+    $_SESSION["csrf_token"] = bin2hex(random_bytes(32));
+}
+
 $_SESSION["pagina"] = "dashboard";
 
 /* ==========================
@@ -40,9 +44,10 @@ if (isset($_SESSION["mensaje"])) {
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     /* Validación CSRF: si el token no coincide, se corta acá. */
-    $tokenRecibido = $_POST["csrf_token"] ?? "";
+    $tokenRecibido = (string) ($_POST["csrf_token"] ?? "");
+    $tokenEsperado = (string) ($_SESSION["csrf_token"] ?? "");
 
-    if (!hash_equals($_SESSION["csrf_token"], $tokenRecibido)) {
+    if (!hash_equals($tokenEsperado, $tokenRecibido)) {
 
         $mensaje = "Sesión inválida o expirada. Intente de nuevo.";
         $tipo = "error";
@@ -72,7 +77,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         nombre,
                         categoria,
                         precio,
-                        cantidad
+                        cantidad,
+                        imagen
                     FROM productos
                     WHERE codigo = ?
                 ");
@@ -113,7 +119,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             } else {
 
                 $stmt = $conexion->prepare(
-                    "SELECT codigo, nombre, categoria, precio, cantidad
+                    "SELECT codigo, nombre, categoria, precio, cantidad, imagen
                      FROM productos
                      WHERE codigo = ?"
                 );
@@ -133,6 +139,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         "categoria" => $producto["categoria"],
                         "precio" => $producto["precio"],
                         "cantidad" => $producto["cantidad"],
+                        "imagen" => $producto["imagen"] ?? "",
                     ];
 
                     $_SESSION["mensaje"] = "Producto cargado para actualizar.";
@@ -211,7 +218,8 @@ if ($productoEncontrado !== null) {
         nombre,
         categoria,
         precio,
-        cantidad
+        cantidad,
+        imagen
     FROM productos
     ORDER BY nombre ASC
     ";
@@ -237,51 +245,56 @@ if ($productoEncontrado !== null) {
 
         <header>
 
-            <h1>Dashboard — Inventario TecnoMarket</h1>
+            <div class="header-principal">
+                <div class="header-titulo">
+                    <div class="menu-acciones">
+                        <input type="checkbox" id="menu-toggle" class="menu-toggle">
 
-            <nav>
-                <a href="index.php">← Volver al formulario</a>
-            </nav>
+                        <label for="menu-toggle" class="menu-icon" aria-label="Abrir menú de acciones">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </label>
 
-            <input type="checkbox" id="menu-toggle" class="menu-toggle">
+                        <form method="POST" class="Burguer" autocomplete="off">
 
-            <label for="menu-toggle" class="menu-icon" aria-label="Abrir menú de acciones">
-                ☰
-            </label>
+                            <input type="hidden" name="csrf_token"
+                                value="<?= htmlspecialchars($_SESSION["csrf_token"]) ?>">
 
-            <form method="POST" class="Burguer" autocomplete="off">
+                            <label for="codigo" class="campo-codigo">
 
-                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION["csrf_token"]) ?>">
+                                Código
 
-                <label for="codigo">
+                                <input type="text" id="codigo" name="codigo" placeholder="Ej: TM-001" maxlength="20"
+                                    value="<?= htmlspecialchars($codigo) ?>" required>
 
-                    Código
+                            </label>
 
-                    <input type="text" id="codigo" name="codigo" placeholder="Ej: TM-001" maxlength="20"
-                        value="<?= htmlspecialchars($codigo) ?>" required>
+                            <div class="botones-acciones">
+                                <button type="submit" name="accion" value="buscar" class="btn-buscar">
+                                    Buscar
+                                </button>
 
-                </label>
+                                <button type="submit" name="accion" value="actualizar" class="btn-actualizar">
+                                    Actualizar
+                                </button>
 
-                <button type="submit" name="accion" value="buscar" class="btn-buscar">
+                                <button type="submit" name="accion" value="eliminar" class="btn-eliminar"
+                                    onclick="return confirm('¿Está seguro de eliminar este producto?')">
+                                    Eliminar
+                                </button>
+                            </div>
 
-                    Buscar
+                        </form>
+                    </div>
 
-                </button>
+                    <h1>Dashboard — Inventario TecnoMarket</h1>
+                </div>
 
-                <button type="submit" name="accion" value="actualizar" class="btn-actualizar">
-
-                    Actualizar
-
-                </button>
-
-                <button type="submit" name="accion" value="eliminar" class="btn-eliminar"
-                    onclick="return confirm('¿Está seguro de eliminar este producto?')">
-
-                    Eliminar
-
-                </button>
-
-            </form>
+                <nav>
+                    <a href="index.php">← Volver al formulario</a>
+                </nav>
+            </div>
 
         </header>
 
@@ -321,6 +334,7 @@ if ($productoEncontrado !== null) {
                         <th>Categoría</th>
                         <th>Precio</th>
                         <th>Cantidad</th>
+                        <th>Imagen</th>
                     </tr>
 
                 </thead>
@@ -337,6 +351,14 @@ if ($productoEncontrado !== null) {
                                 <td data-label="Categoría"><?= htmlspecialchars($fila["categoria"]) ?></td>
                                 <td data-label="Precio">$ <?= number_format((float) $fila["precio"], 0, ",", ".") ?></td>
                                 <td data-label="Cantidad"><?= (int) $fila["cantidad"] ?></td>
+                                <td data-label="Imagen">
+                                    <?php if (!empty($fila["imagen"])): ?>
+                                        <a href="<?= htmlspecialchars($fila["imagen"]) ?>" target="_blank" rel="noopener"
+                                            class="btn-ver-imagen">Ver imagen</a>
+                                    <?php else: ?>
+                                        <span class="sin-imagen">Sin foto</span>
+                                    <?php endif; ?>
+                                </td>
                             </tr>
 
                         <?php endforeach; ?>

@@ -11,7 +11,8 @@ CREATE TABLE productos (
   nombre VARCHAR(120) NOT NULL,
   categoria VARCHAR(80) NOT NULL,
   precio DECIMAL(12, 2) NOT NULL,
-  cantidad INT NOT NULL
+  cantidad INT NOT NULL,
+  imagen VARCHAR(255) NULL
 );
 
 
