@@ -4,16 +4,6 @@ include "PHP/conexion.php";
 $_SESSION["pagina"] = "dashboard";
 
 /* ==========================
-   CSRF TOKEN
-   Se genera una sola vez por sesión y se valida
-   en cada acción que modifica datos (POST).
-========================== */
-
-if (!isset($_SESSION["csrf_token"])) {
-    $_SESSION["csrf_token"] = bin2hex(random_bytes(32));
-}
-
-/* ==========================
    VARIABLES
 ========================== */
 
@@ -111,8 +101,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         /* ======================
            ACTUALIZAR
-           El formulario completo de edición vive en index.php,
-           así que acá solo validamos el código y redirigimos.
         ====================== */
 
         if ($accion === "actualizar") {
@@ -124,8 +112,42 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             } else {
 
-                header("Location: index.php?codigo=" . urlencode($codigo));
-                exit;
+                $stmt = $conexion->prepare(
+                    "SELECT codigo, nombre, categoria, precio, cantidad
+                     FROM productos
+                     WHERE codigo = ?"
+                );
+
+                $stmt->bind_param("s", $codigo);
+                $stmt->execute();
+
+                $consulta = $stmt->get_result();
+
+                if ($consulta->num_rows > 0) {
+
+                    $producto = $consulta->fetch_assoc();
+
+                    $_SESSION["form_producto"] = [
+                        "codigo" => $producto["codigo"],
+                        "nombre" => $producto["nombre"],
+                        "categoria" => $producto["categoria"],
+                        "precio" => $producto["precio"],
+                        "cantidad" => $producto["cantidad"],
+                    ];
+
+                    $_SESSION["mensaje"] = "Producto cargado para actualizar.";
+                    $_SESSION["tipo"] = "exito";
+
+                    header("Location: index.php");
+                    exit;
+
+                } else {
+
+                    $mensaje = "No existe un producto con ese código.";
+                    $tipo = "error";
+                }
+
+                $stmt->close();
             }
         }
 
