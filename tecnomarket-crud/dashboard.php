@@ -13,7 +13,6 @@ $_SESSION["pagina"] = "dashboard";
 
 $mensaje = "";
 $tipo = "";
-
 $codigo = "";
 
 /* Si una búsqueda encuentra un producto, la tabla se filtra
@@ -22,10 +21,17 @@ $productoEncontrado = null;
 
 /* ==========================
    MENSAJES (flash desde sesión)
-   Esto sigue vivo porque index.php redirige para acá
-   después de actualizar un producto.
 ========================== */
+/*Codigo unico generado por el servidor (Cross-Site Request Forgery)
+si no existe token se crea y si existe no hace nada
+*/ 
 
+
+/*  ISSET (Valida si hay un mensaje existente en la sesion)
+    UNSET (ELIMINA EL MENSAJE) 
+    
+    Los mensajes son enviados por los botones que generan las consultas ("Eliminar", "Actualizar", "Buscar")
+    */
 if (isset($_SESSION["mensaje"])) {
     $mensaje = $_SESSION["mensaje"];
     $tipo = $_SESSION["tipo"] ?? "exito";
@@ -71,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             } else {
 
-                $stmt = $conexion->prepare("
+                $consulta = $conexion->prepare("
                     SELECT
                         codigo,
                         nombre,
@@ -83,10 +89,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     WHERE codigo = ?
                 ");
 
-                $stmt->bind_param("s", $codigo);
-                $stmt->execute();
+                $consulta->bind_param("s", $codigo);
+                $consulta->execute();
 
-                $consulta = $stmt->get_result();
+                $consulta = $consulta->get_result();
 
                 if ($consulta->num_rows > 0) {
 
@@ -101,7 +107,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     $tipo = "error";
                 }
 
-                $stmt->close();
+                $consulta->close();
             }
         }
 
@@ -118,16 +124,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             } else {
 
-                $stmt = $conexion->prepare(
+                $consulta = $conexion->prepare(
                     "SELECT codigo, nombre, categoria, precio, cantidad, imagen
                      FROM productos
                      WHERE codigo = ?"
                 );
 
-                $stmt->bind_param("s", $codigo);
-                $stmt->execute();
+                $consulta->bind_param("s", $codigo);
+                $consulta->execute();
 
-                $consulta = $stmt->get_result();
+                $consulta = $consulta->get_result();
 
                 if ($consulta->num_rows > 0) {
 
@@ -154,7 +160,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     $tipo = "error";
                 }
 
-                $stmt->close();
+                $consulta->close();
             }
         }
 
@@ -171,16 +177,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             } else {
 
-                $stmt = $conexion->prepare("
+                $consulta = $conexion->prepare("
                     DELETE
                     FROM productos
                     WHERE codigo = ?
                 ");
 
-                $stmt->bind_param("s", $codigo);
-                $stmt->execute();
+                $consulta->bind_param("s", $codigo);
+                $consulta->execute();
 
-                if ($stmt->affected_rows > 0) {
+                if ($consulta->affected_rows > 0) {
 
                     $mensaje = "Producto eliminado correctamente.";
                     $tipo = "exito";
@@ -194,7 +200,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     $tipo = "error";
                 }
 
-                $stmt->close();
+                $consulta->close();
             }
         }
     }
