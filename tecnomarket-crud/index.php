@@ -7,17 +7,17 @@ if (empty($_SESSION["csrf_token"])) {
 
 function subirImagenProducto(array $archivo, string $directorio): array
 {
-    if (!isset($archivo["name"]) || $archivo["error"] !== UPLOAD_ERR_OK) {
+   if (!isset($archivo["name"]) || $archivo["error"] !== UPLOAD_ERR_OK) {
         return ["ok" => false, "mensaje" => "No se seleccionó una imagen válida.", "ruta" => ""];
     }
 
     if (!is_dir($directorio)) {
         mkdir($directorio, 0777, true);
-    }
+    } 
 
     $nombreOriginal = basename($archivo["name"]);
     $extension = pathinfo($nombreOriginal, PATHINFO_EXTENSION);
-    $nombreArchivo = uniqid("prod_", true) . ($extension !== "" ? "." . strtolower($extension) : "");
+    $nombreArchivo = uniqid("prod_", true) . ($extension !== ""  ? "." . strtolower($extension) : "");
     $rutaDestino = $directorio . "/" . $nombreArchivo;
 
     if (!move_uploaded_file($archivo["tmp_name"], $rutaDestino)) {
