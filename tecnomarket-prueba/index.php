@@ -1,5 +1,8 @@
 <?php
 include "PHP/conexion.php";
+require_once __DIR__ . "/PHP/seguridad.php";
+require_once __DIR__ . "/PHP/autenticacion.php";
+requiereAutenticacion();
 
 if (empty($_SESSION["csrf_token"])) {
     $_SESSION["csrf_token"] = bin2hex(random_bytes(32));
@@ -279,6 +282,11 @@ if ($consultaDestacados) {
                     <a href="#catalogo">Productos</a>
                     <a href="#formulario">Registrar producto</a>
                     <a class="nav-dashboard" href="dashboard.php">Ver inventario <span aria-hidden="true">→</span></a>
+                    <span class="separador-nav" aria-hidden="true"></span>
+                    <form class="form-salir" action="PHP/acciones_auth.php" method="post">
+                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(tokenCsrf()) ?>">
+                        <button class="btn-salir" type="submit" name="accion" value="logout">Cerrar sesión</button>
+                    </form>
                 </div>
             </nav>
 
@@ -297,12 +305,14 @@ if ($consultaDestacados) {
             <div class="hero-estadisticas" aria-label="Resumen del catálogo">
                 <div>
                     <strong><?= number_format((int) $estadisticasInventario["productos"], 0, ",", ".") ?></strong><span>productos
-                        registrados</span></div>
+                        registrados</span>
+                </div>
                 <div><strong><?= number_format((int) $estadisticasInventario["unidades"], 0, ",", ".") ?></strong><span>unidades
                         disponibles</span></div>
                 <div>
                     <strong><?= number_format((int) $estadisticasInventario["categorias"], 0, ",", ".") ?></strong><span>categorías
-                        registradas</span></div>
+                        registradas</span>
+                </div>
             </div>
         </header>
 
@@ -312,39 +322,39 @@ if ($consultaDestacados) {
                     <p class="eyebrow">Catálogo visual</p>
                     <h2 id="titulo-catalogo">Productos destacados</h2>
                 </div>
-                <div class="controles-carrusel" aria-label="Controles del carrusel">
-                    <button class="control-carrusel" type="button" data-carrusel="anterior"
-                        aria-label="Ver productos anteriores">←</button>
-                    <button class="control-carrusel" type="button" data-carrusel="siguiente"
-                        aria-label="Ver productos siguientes">→</button>
-                </div>
             </div>
 
             <?php if (count($productosDestacados) > 0): ?>
-                <div class="carrusel" tabindex="0" aria-label="Carrusel de productos">
-                    <div class="pista-carrusel">
-                        <?php foreach ($productosDestacados as $producto): ?>
-                            <article class="tarjeta-producto">
-                                <div class="imagen-producto">
-                                    <?php if (!empty($producto["imagen"])): ?>
-                                        <img src="<?= htmlspecialchars($producto["imagen"]) ?>"
-                                            alt="<?= htmlspecialchars($producto["nombre"]) ?>" loading="lazy">
-                                    <?php else: ?>
-                                        <span class="sr-only">Producto sin imagen</span>
-                                    <?php endif; ?>
-                                    <span class="etiqueta-categoria"><?= htmlspecialchars($producto["categoria"]) ?></span>
-                                </div>
-                                <div class="tarjeta-contenido">
-                                    <p class="codigo-producto"><?= htmlspecialchars($producto["codigo"]) ?></p>
-                                    <h3><?= htmlspecialchars($producto["nombre"]) ?></h3>
-                                    <div class="tarjeta-pie">
-                                        <strong>$ <?= number_format((float) $producto["precio"], 0, ",", ".") ?></strong>
-                                        <span><?= (int) $producto["cantidad"] ?> unidades</span>
+                <div class="carrusel-contenedor">
+                    <button class="control-carrusel control-anterior" type="button" data-carrusel="anterior"
+                        aria-label="Ver productos anteriores">←</button>
+                    <div class="carrusel" tabindex="0" aria-label="Carrusel de productos">
+                        <div class="pista-carrusel">
+                            <?php foreach ($productosDestacados as $producto): ?>
+                                <article class="tarjeta-producto">
+                                    <div class="imagen-producto">
+                                        <?php if (!empty($producto["imagen"])): ?>
+                                            <img src="<?= htmlspecialchars($producto["imagen"]) ?>"
+                                                alt="<?= htmlspecialchars($producto["nombre"]) ?>" loading="lazy">
+                                        <?php else: ?>
+                                            <span class="sr-only">Producto sin imagen</span>
+                                        <?php endif; ?>
+                                        <span class="etiqueta-categoria"><?= htmlspecialchars($producto["categoria"]) ?></span>
                                     </div>
-                                </div>
-                            </article>
-                        <?php endforeach; ?>
+                                    <div class="tarjeta-contenido">
+                                        <p class="codigo-producto"><?= htmlspecialchars($producto["codigo"]) ?></p>
+                                        <h3><?= htmlspecialchars($producto["nombre"]) ?></h3>
+                                        <div class="tarjeta-pie">
+                                            <strong>$ <?= number_format((float) $producto["precio"], 0, ",", ".") ?></strong>
+                                            <span><?= (int) $producto["cantidad"] ?> unidades</span>
+                                        </div>
+                                    </div>
+                                </article>
+                            <?php endforeach; ?>
+                        </div>
                     </div>
+                    <button class="control-carrusel control-siguiente" type="button" data-carrusel="siguiente"
+                        aria-label="Ver productos siguientes">→</button>
                 </div>
             <?php else: ?>
                 <div class="catalogo-vacio">
@@ -362,7 +372,8 @@ if ($consultaDestacados) {
                 <p>Completa los datos esenciales para mantener tu catálogo actualizado y fácil de consultar.</p>
             </div>
 
-            <form action="index.php#formulario" method="post" enctype="multipart/form-data">
+            <form action="PHP/acciones_producto.php" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(tokenCsrf()) ?>">
                 <h2 class="titulo-form">Datos del producto</h2>
                 <p class="subtitulo-form">Los campos con información precisa facilitan la gestión del inventario.</p>
 

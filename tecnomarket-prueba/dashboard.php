@@ -1,5 +1,8 @@
 <?php
 include "PHP/conexion.php";
+require_once __DIR__ . "/PHP/seguridad.php";
+require_once __DIR__ . "/PHP/autenticacion.php";
+requiereAutenticacion();
 
 if (empty($_SESSION["csrf_token"])) {
     $_SESSION["csrf_token"] = bin2hex(random_bytes(32));
@@ -19,17 +22,22 @@ $codigo = "";
    para mostrar únicamente ese resultado. */
 $productoEncontrado = null;
 
+if (isset($_SESSION["producto_encontrado"])) {
+    $productoEncontrado = $_SESSION["producto_encontrado"];
+    unset($_SESSION["producto_encontrado"]);
+}
+
 /* ==========================
    MENSAJES (flash desde sesión)
 ========================== */
 /*Codigo unico generado por el servidor (Cross-Site Request Forgery)
 si no existe token se crea y si existe no hace nada
-*/ 
+*/
 
 
 /*  ISSET (Valida si hay un mensaje existente en la sesion)
     UNSET (ELIMINA EL MENSAJE) 
-    
+
     Los mensajes son enviados por los botones que generan las consultas ("Eliminar", "Actualizar", "Buscar")
     */
 if (isset($_SESSION["mensaje"])) {
@@ -262,7 +270,7 @@ if ($productoEncontrado !== null) {
                             <span></span>
                         </label>
 
-                        <form method="POST" class="Burguer" autocomplete="off">
+                        <form method="POST" action="PHP/acciones_dashboard.php" class="Burguer" autocomplete="off">
 
                             <input type="hidden" name="csrf_token"
                                 value="<?= htmlspecialchars($_SESSION["csrf_token"]) ?>">
@@ -299,6 +307,11 @@ if ($productoEncontrado !== null) {
 
                 <nav>
                     <a href="index.php">← Volver al formulario</a>
+                    <span class="separador-nav" aria-hidden="true"></span>
+                    <form class="form-salir" action="PHP/acciones_auth.php" method="post">
+                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(tokenCsrf()) ?>">
+                        <button class="btn-salir" type="submit" name="accion" value="logout">Cerrar sesión</button>
+                    </form>
                 </nav>
             </div>
 
@@ -385,12 +398,19 @@ if ($productoEncontrado !== null) {
 
         </section>
 
-        <footer>
-            <p>
-                Sistema:
-                <?= htmlspecialchars($_SESSION["sistema"] ?? "TecnoMarket") ?>
-            </p>
-        </footer>
+<footer class="footer-institucional">
+        <div class="footer-marca">
+            <a class="marca" href="index.php" aria-label="TecnoMarket, inicio">TM<span>.</span></a>
+            <p>Inventario digital para una gestión tecnológica clara y eficiente.</p>
+        </div>
+        <div class="footer-creditos">
+            <p>Proyecto académico desarrollado por <strong>Rodney Puertas</strong></p>
+            <p>Aprendiz de Análisis y Desarrollo de Software · SENA</p>
+        </div>
+        <div class="footer-presentacion">
+            <p><?= date("Y") ?> · TecnoMarket S.A.S.</p>
+    </div>
+</footer>
 
     </div>
 
