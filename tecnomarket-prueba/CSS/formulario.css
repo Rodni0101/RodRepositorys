@@ -259,6 +259,7 @@ input {
     line-height: 1;
     cursor: pointer;
     transition: var(--transition);
+    transform: translateY(-50%)
 }
 .control-anterior {
     left: -24px;

@@ -327,7 +327,7 @@ if ($consultaDestacados) {
             <?php if (count($productosDestacados) > 0): ?>
                 <div class="carrusel-contenedor">
                     <button class="control-carrusel control-anterior" type="button" data-carrusel="anterior"
-                        aria-label="Ver productos anteriores">←</button>
+                        aria-label="Ver productos anteriores">‹</button>
                     <div class="carrusel" tabindex="0" aria-label="Carrusel de productos">
                         <div class="pista-carrusel">
                             <?php foreach ($productosDestacados as $producto): ?>
@@ -354,7 +354,7 @@ if ($consultaDestacados) {
                         </div>
                     </div>
                     <button class="control-carrusel control-siguiente" type="button" data-carrusel="siguiente"
-                        aria-label="Ver productos siguientes">→</button>
+                        aria-label="Ver productos siguientes">›</button>
                 </div>
             <?php else: ?>
                 <div class="catalogo-vacio">
