@@ -1,0 +1,395 @@
+========================================
+Formulario.php
+========================================
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Practica de Parcial</title>
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body>
+        <header>Practica para parcial</header>
+
+        <hr />
+        <form action="logica.php" method="post">
+            <div class="inputs">
+                <label for="title">
+                    Nombre
+                    <input type="text" placeholder="Ingresa tu nombre" required name="Nombre" />
+                </label>
+
+                <label for="title">
+                    Apellido
+                    <input type="text" placeholder="Ingresa tu apellido" required name="Apellido" />
+                </label>
+
+                <label for="title">
+                    Edad
+                    <input type="text" placeholder="Ingresa tu edad" required name="Edad" />
+                </label>
+
+                <button type="submit">Enviar</button>
+            </div>
+        </form>
+
+        <form action="Acciones/Buscar.php" method="post">
+            <div class="Buscar">
+                <header>Seccion de Busqueda</header>
+                <label for="title">Buscar usuario</label>
+                <input type="search" placeholder="Buscar usuario por Nombre" name="Buscar"/>
+                <button type="submit">Buscar</button>
+                <button type="reset">Limpiar</button>
+            </div>
+        </form>
+    </body>
+</html>
+
+========================================
+logica.php
+========================================
+
+<?php
+$conexion = new mysqli("localhost", "root", "1048442903", "Practica_Parcial");
+
+if ($conexion->connect_error) {
+    die("Error" . $conexion->connect_error);
+}
+
+if ($_SERVER['REQUEST_METHOD'] === "POST") {
+    $nombre = $_POST['Nombre'];
+    $apellido = $_POST['Apellido'];
+    $edad = $_POST['Edad'];
+
+    $consulta = "INSERT INTO Persona(Nombre, Apellido, Edad) VALUES (?, ?, ?)";
+    $preparacion = $conexion->prepare($consulta);
+
+    if ($preparacion === false) {
+        echo "<script>
+            alert('No se pudo preparar el registro: " . addslashes($conexion->error) . "');
+            window.history.back();
+        </script>";
+        exit;
+    }
+
+    $preparacion->bind_param("ssi", $nombre, $apellido, $edad);
+
+    if ($preparacion->execute()) {
+        echo "<script>
+            alert('Usuario guardado correctamente.');
+            window.location.href = 'Formulario.php';
+        </script>";
+    } else {
+        echo "<script>
+            alert('No se pudo guardar el usuario: " . addslashes($preparacion->error) . "');
+            window.history.back();
+        </script>";
+    }
+
+    $preparacion->close();
+
+    $conexion->close();
+}
+?>
+
+========================================
+Acciones/Buscar.php
+========================================
+
+<?php
+$buscar = trim($_POST['Buscar'] ?? '');
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST' || $buscar === '') {
+    header('Location: ../Formulario.php');
+    exit;
+}
+
+$conexion = new mysqli('localhost', 'root', '1048442903', 'Practica_Parcial');
+
+if ($conexion->connect_error) {
+    die('No se pudo conectar a la base de datos.');
+}
+
+$consulta = 'SELECT Nombre, Apellido, Edad FROM Persona WHERE Nombre LIKE CONCAT("%", ?, "%")';
+$preparacion = $conexion->prepare($consulta);
+
+if ($preparacion === false) {
+    die('No se pudo realizar la búsqueda.');
+}
+
+$preparacion->bind_param('s', $buscar);
+$preparacion->execute();
+$resultado = $preparacion->get_result();
+//estudiar esto
+$personas = $resultado->fetch_all(MYSQLI_ASSOC);
+
+$preparacion->close();
+$conexion->close();
+?>
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Resultados de búsqueda</title>
+        <link rel="stylesheet" href="../styles.css" />
+    </head>
+    <body class="pagina-resultados">
+        <header>Resultados de búsqueda</header>
+
+        <main class="contenedor-resultados">
+            <section class="resultados">
+                <p class="busqueda-realizada">
+                    Resultados para: <strong><?= htmlspecialchars($buscar) ?></strong>
+                </p>
+
+                <?php if (count($personas) > 0): ?>
+                    <div class="tabla-contenedor">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Apellido</th>
+                                    <th>Edad</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($personas as $persona): ?>
+                                    <tr>
+                                        <td><?= htmlspecialchars($persona['Nombre']) ?></td>
+                                        <td><?= htmlspecialchars($persona['Apellido']) ?></td>
+                                        <td><?= htmlspecialchars((string) $persona['Edad']) ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                <?php else: ?>
+                    <p class="sin-resultados">No se encontraron usuarios con ese nombre.</p>
+                <?php endif; ?>
+
+                <a class="boton-volver" href="../Formulario.php">Volver al formulario</a>
+            </section>
+        </main>
+    </body>
+</html>
+
+========================================
+styles.css
+========================================
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background-color: #f2f5f9;
+    color: #24324a;
+}
+
+header {
+    padding: 24px;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    background-color: #3b82f6;
+}
+
+hr {
+    display: none;
+}
+
+form {
+    width: min(90%, 420px);
+    margin: 36px auto;
+}
+
+.inputs,
+.Buscar {
+    padding: 30px;
+    border-radius: 12px;
+    background-color: white;
+    box-shadow: 0 8px 20px rgba(36, 50, 74, 0.12);
+}
+
+label {
+    display: block;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+input {
+    display: block;
+    width: 100%;
+    margin-top: 8px;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 1rem;
+    outline: none;
+}
+
+input:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.18);
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    background-color: #3b82f6;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+button:hover {
+    background-color: #2563eb;
+    transform: translateY(-2px);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+.Buscar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.Buscar header,
+.Buscar label,
+.Buscar input {
+    grid-column: 1 / -1;
+}
+
+.Buscar header {
+    margin: -30px -30px 8px;
+    padding: 18px;
+    border-radius: 12px 12px 0 0;
+    font-size: 1.2rem;
+    background-color: #1d4ed8;
+}
+
+.Buscar label {
+    margin: 0;
+}
+
+.Buscar input {
+    margin-top: -6px;
+}
+
+.Buscar button + button {
+    color: #24324a;
+    background-color: #e2e8f0;
+}
+
+.Buscar button + button:hover {
+    background-color: #cbd5e1;
+}
+
+@media (max-width: 420px) {
+    .inputs,
+    .Buscar {
+        padding: 22px;
+    }
+
+    .Buscar header {
+        margin: -22px -22px 8px;
+    }
+}
+
+.contenedor-resultados {
+    width: min(92%, 760px);
+    margin: 48px auto;
+}
+
+.resultados {
+    padding: 32px;
+    border-radius: 12px;
+    background-color: white;
+    box-shadow: 0 8px 20px rgba(36, 50, 74, 0.12);
+}
+
+.busqueda-realizada {
+    margin-top: 0;
+    font-size: 1.1rem;
+}
+
+.tabla-contenedor {
+    overflow-x: auto;
+    margin: 24px 0;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+th,
+td {
+    padding: 14px 16px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+th {
+    color: white;
+    background-color: #3b82f6;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f8fafc;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.sin-resultados {
+    margin: 24px 0;
+    padding: 16px;
+    border-radius: 8px;
+    color: #9a3412;
+    background-color: #ffedd5;
+}
+
+.boton-volver {
+    display: inline-block;
+    padding: 12px 18px;
+    border-radius: 6px;
+    color: white;
+    background-color: #3b82f6;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.boton-volver:hover {
+    background-color: #2563eb;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 420px) {
+    .resultados {
+        padding: 22px;
+    }
+
+    th,
+    td {
+        padding: 12px;
+    }
+}
