@@ -183,7 +183,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $existe->execute();
             $resultado = $existe->get_result();
 
-            if ($resultado->num_rows === 0) {
+            if ($resultado->num_rows === 0) {   
                 $mensaje = "No se puede actualizar: el código no existe. Busque primero el producto.";
                 $tipo = "error";
             } else {
@@ -270,6 +270,7 @@ if ($consultaDestacados) {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="CSS/formulario.css" />
+    <link rel="shortcut icon" href="./Favicon/favicon_128x128.png" type="image/x-icon">
     <title>TecnoMarket | Inventario</title>
 </head>
 
@@ -281,7 +282,7 @@ if ($consultaDestacados) {
                 <div class="enlaces-nav">
                     <a href="#catalogo">Productos</a>
                     <a href="#formulario">Registrar producto</a>
-                    <a class="nav-dashboard" href="dashboard.php">Ver inventario <span aria-hidden="true">→</span></a>
+                    <a class="nav-dashboard" href="dashboard.php">Ver inventario <span aria-hidden="true"> ➤ </span></a>
                     <span class="separador-nav" aria-hidden="true"></span>
                     <form class="form-salir" action="PHP/acciones_auth.php" method="post">
                         <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(tokenCsrf()) ?>">
@@ -296,8 +297,7 @@ if ($consultaDestacados) {
                 <p class="hero-texto">Registra, organiza y consulta el inventario de TecnoMarket desde un solo lugar.
                 </p>
                 <div class="hero-acciones">
-                    <a class="btn-hero-principal" href="#formulario">Agregar producto <span
-                            aria-hidden="true">↓</span></a>
+                    <a class="btn-hero-principal" href="#formulario">Agregar producto<span aria-hidden="true">↓</span></a>
                     <a class="btn-hero-secundario" href="dashboard.php">Explorar inventario</a>
                 </div>
             </div>

@@ -1,0 +1,4 @@
+# Credenciales locales: nunca deben versionarse.
+PHP/google_credentials.php
+client_secret_*.json
+

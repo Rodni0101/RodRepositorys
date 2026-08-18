@@ -16,6 +16,7 @@ if (usuarioActual()) {
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Registro | TecnoMarket</title>
     <link rel="stylesheet" href="CSS/auth.css">
+    <link rel="shortcut icon" href="./Favicon/favicon_128x128.png" type="image/x-icon">
 </head>
 
 <body>
@@ -54,8 +55,7 @@ if (usuarioActual()) {
             </form>
 
             <div class="separador-auth"><span>o</span></div>
-            <a class="btn-google" href="https://accounts.google.com/" target="_blank" rel="noopener noreferrer"
-                aria-label="Abrir inicio de sesión de Google">
+            <a class="btn-google" href="PHP/google_login.php" aria-label="Continuar con Google">
                 <svg aria-hidden="true" viewBox="0 0 24 24">
                     <path fill="#4285F4"
                         d="M21.8 12.2c0-.7-.1-1.3-.2-1.9H12v3.6h5.5a4.7 4.7 0 0 1-2 3.1v2.4h3.2c1.9-1.8 3.1-4.3 3.1-7.2Z" />
@@ -68,7 +68,7 @@ if (usuarioActual()) {
                 </svg>
                 Continuar con Google
             </a>
-            <p class="nota-google">Abrirá la página de inicio de sesión de Google.</p>
+            <p class="nota-google">Crea o vincula tu cuenta con Google de forma segura.</p>
             <p class="enlace">¿Ya tienes cuenta? <a href="login.php">Inicia sesión</a></p>
         </section>
     </main>
